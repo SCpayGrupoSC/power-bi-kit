@@ -17,10 +17,13 @@ Ficam na pasta [`power-bi-kit/`](./power-bi-kit) e também em `public/power-bi-k
 | Arquivo | Uso |
 |---|---|
 | `tema-conciliacao-spread.json` | Exibir → Temas → Procurar temas |
-| `medidas-layout.dax` | Modelagem → Nova medida (uma por bloco) |
+| `medidas-layout.dax` | Modelagem → Nova medida — uma medida por clique |
 | `posicoes-visuais.csv` | Formato → Geral → Posição (X, Y, largura, altura) |
 
 O `README` dessa pasta explica cada arquivo sem jargão de programação.
+
+Para retomar a montagem de onde parou, veja
+[`power-bi-kit/ESTADO-DA-MONTAGEM.md`](./power-bi-kit/ESTADO-DA-MONTAGEM.md).
 
 ## Como rodar
 

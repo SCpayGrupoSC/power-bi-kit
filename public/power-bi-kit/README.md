@@ -5,6 +5,9 @@ Os três arquivos abaixo são os mesmos que o app baixa pelos botões.
 
 Não precisa saber programar. A ordem certa está no assistente (aba **Passo a passo**).
 
+> **Retomando o trabalho?** Leia [`ESTADO-DA-MONTAGEM.md`](./ESTADO-DA-MONTAGEM.md):
+> o que já está feito, o que falta e as armadilhas que já custaram tempo.
+
 ## Arquivos
 
 | Arquivo | Para que serve | Onde entra no Power BI |
