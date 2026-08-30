@@ -6,6 +6,9 @@ Relatório: **Fechamento** (conciliação Spread previsto — MDR, Pix, Antecipa
 Arquivo: `.pbix` no Power BI Desktop
 Tela: **1280 × 720**
 
+Paleta: **SCpay** (`tema-scpay.json`).
+Checklist em `/estado`; o assistente abre no primeiro passo pendente.
+
 ---
 
 ## O modelo real
@@ -28,53 +31,77 @@ Clique em **Atualizar agora** na faixa amarela antes de conferir números.
 
 ## Já feito
 
-- [x] Tema `tema-conciliacao-spread.json` aplicado
 - [x] Tamanho da página em `1280 x 720 (HD)`
 - [x] As 8 medidas obrigatórias criadas:
-      `Diferença Abs`, `Status Layout`, `Status Cor`, `Qtd Fluxos OK`,
-      `Qtd Fluxos Divergente`, `Qtd Fluxos Aguardando`, `Status Resumo`,
-      `KPI Subtítulo Periodo`
-- [x] `Previsto Texto` criada
-- [x] Cartão **Previsto** em X 16, Y 136
-- [x] Cartão **Oficial** em X 331, Y 136
+  `Diferença Abs`, `Status Layout`, `Status Cor`, `Qtd Fluxos OK`,
+  `Qtd Fluxos Divergente`, `Qtd Fluxos Aguardando`, `Status Resumo`,
+  `KPI Subtítulo Periodo`
+- [x] As 5 medidas de texto do apêndice (9 a 13), com `ISBLANK`:
+  `Previsto Texto`, `Oficial Texto`, `Diferença Texto`,
+  `Spread Previsto Texto`, `Spread Oficial Texto`
+- [x] **Título** em 16 · 12 · 1248 · 48, com `KPI Subtítulo Periodo`
+  como valor dinâmico (entra pelo botão **+ Valor** da caixa de texto,
+  digitando o nome da medida — não existe lista de medidas ali)
+- [x] Barra de filtros: **Competência** em 16 · 72 e **Fluxo** em 328 · 72,
+  os dois em `300 × 48`, estilo **Suspenso**
+- [x] Os 4 KPIs na linha Y 136, `303 × 100`: Previsto (16), Oficial (331),
+  Diferença (646), Status geral (961)
+- [x] **Tabela de conciliação** em 16 · 248 · 820 · 148, com `Status Layout`
+  e `Diferença Abs`
+- [x] **Tabela de detalhe** em 16 · 408 · 820 · 296
+- [x] Os 4 cartões soltos de Spread apagados
 
 ---
 
-## Pendente
+## Pendente — comece aqui
 
-### Medidas
+### 1. Tema e cores da marca
 
-- [ ] Refazer `Previsto Texto` com `IF ( ISBLANK ( ... ) )` — hoje, se o
-      valor vier vazio, o cartão fica em branco em vez de mostrar `—`
-- [ ] `Oficial Texto`
-- [ ] `Diferença Texto`
-- [ ] `Spread Previsto Texto`
-- [ ] `Spread Oficial Texto`
+- [ ] **Exibir → Temas → Procurar temas** → `tema-scpay.json`
 
-Todas estão no apêndice do `medidas-layout.dax` (medidas 9 a 13).
+Troca a paleta antiga pela da SCpay: fundo `#F7F9FB`, cartões brancos com
+canto de 16 px, cabeçalho de tabela em `#2B2D3B` com texto branco.
 
-### Visuais
+- [ ] Abrir a medida **`Status Cor`** e substituir a fórmula pela versão da
+  marca (teal no OK, laranja no Aguardando, vermelho do logo na divergência)
 
-- [ ] Cartão **Diferença** — `Diferença Texto` — 646 · 136 · 303 · 100
-- [ ] Cartão **Status geral** — `Status Layout` — 961 · 136 · 303 · 100
-- [ ] Cor da fonte dos cartões Diferença e Status pela medida `Status Cor`
-- [ ] Mover a **tabela de conciliação** (a de cima) para 16 · 248 · 820 · 148,
-      acrescentando as colunas `Status Layout` e `Diferença Abs`, e ordenando
-      por `Diferença Abs` decrescente
-- [ ] Criar **Resumo de status** (cartão de várias linhas) com as três
-      `Qtd Fluxos` — 852 · 248 · 412 · 148
-- [ ] Mover a **tabela de detalhe** (a de baixo) para 16 · 408 · 820 · 296
-- [ ] Apagar os 4 cartões soltos de Spread e criar **um** cartão de várias
-      linhas com as medidas de texto de spread — 852 · 408 · 412 · 148
-- [ ] **Título** (caixa de texto) — 16 · 12 · 1248 · 48 — com
-      `KPI Subtítulo Periodo` como valor dinâmico
-- [ ] **Regras** (caixa de texto) — 852 · 568 · 412 · 136 — com
-      `Status Resumo` como valor dinâmico
-- [ ] Mover o filtro de **Competência** para 16 · 72 · 300 · 48
-- [ ] Criar o filtro de **Fluxo** (`dFluxoDax[Fluxo]`) em 328 · 72 · 300 · 48
+O tema **não** muda a cor do status. Ela está escrita dentro do DAX.
+
+### 2. Cor da fonte por status
+
+- [ ] Cartão **Status geral** e cartão **Diferença**:
+  **Formatar visual → Visual → Valores → Cor → fx** →
+  *Estilo do formato:* `Valor do campo` → campo `Status Cor`
+
+O `fx` só aparece depois que a medida já está no balde **Valores**.
+A janela certa se chama **Cor da fonte**. Se o título disser
+**Mostrar em branco como**, é o `fx` errado — ali o cartão passaria a
+exibir o texto `#F07F3C` no lugar do travessão.
+Não é em Título nem em Tela de fundo, e não existe menu chamado
+"Formatação condicional" no cartão.
+
+### 3. Alinhar a coluna da direita
+
+Os seis cartõezinhos ficaram soltos. Alinhe pelo Y, todos a partir de X 852:
+
+- [ ] 3 cartões **Qtd Fluxos** — Vertical **248**
+- [ ] 3 cartões **Spread** — Vertical **408**
+- [ ] Caixa de **regras** (`Status Resumo`) — 852 · **568** · 412 · 136
+
+Opcional: juntar cada trio num **cartão de várias linhas** (412 de largura),
+como está no `posicoes-visuais.csv`. Visualmente é mais limpo, mas os três
+cartões separados mostram a mesma informação.
+
+### 4. Conferir e gravar
+
+- [ ] **Atualizar agora** na faixa amarela — sem isso Oficial, Diferença e as
+  contagens ficam em `—` e 0
+- [ ] Conferir se o status pinta certo e salvar o `.pbix`
 
 Posições completas em `posicoes-visuais.csv`.
 Caminho no Power BI: **Formato → Geral → Propriedades → Posição / Tamanho**.
+O painel só aplica o número depois de **Enter** ou **Tab** — clicar direto no
+visual descarta o valor.
 
 ---
 
