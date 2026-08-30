@@ -1,4 +1,9 @@
-import { kitFiles } from "@/lib/report-spec";
+import {
+  kitFiles,
+  medidasExistentes,
+  medidasNovas,
+  modeloReal,
+} from "@/lib/report-spec";
 
 export function HomePanel() {
   return (
@@ -44,7 +49,7 @@ export function HomePanel() {
           <ul className="mt-3 space-y-2 text-sm">
             <li className="flex items-center gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-[#D4A017]" />
-              Aguardando — falta previsto ou realizado
+              Aguardando — o oficial ainda não chegou
             </li>
             <li className="flex items-center gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-[#1F8A70]" />
@@ -73,6 +78,66 @@ export function HomePanel() {
             </a>
           </article>
         ))}
+      </section>
+
+      <section className="grid gap-3">
+        <h2 className="font-heading text-xl text-[#0B3D4A]">O modelo deste relatório</h2>
+        <div className="overflow-x-auto rounded-xl border border-[#D5DEE3] bg-white shadow-sm">
+          <table className="w-full min-w-[560px] text-left text-sm">
+            <thead className="bg-[#EAF0F2] text-xs uppercase tracking-wide text-[#5C6B78]">
+              <tr>
+                <th className="px-4 py-2 font-semibold">Tabela</th>
+                <th className="px-4 py-2 font-semibold">Papel</th>
+                <th className="px-4 py-2 font-semibold">Campos usados</th>
+              </tr>
+            </thead>
+            <tbody>
+              {modeloReal.map((item) => (
+                <tr key={item.tabela} className="border-t border-[#E6EBEE]">
+                  <td className="px-4 py-2 font-mono text-xs text-[#0B3D4A]">{item.tabela}</td>
+                  <td className="px-4 py-2 text-[#14202B]">{item.papel}</td>
+                  <td className="px-4 py-2 text-[#3D4F5F]">{item.campos}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-2">
+          <article className="rounded-xl border border-[#D5DEE3] bg-white p-4 shadow-sm">
+            <h3 className="text-sm font-semibold text-[#C23B2E]">Já existe — não recriar</h3>
+            <p className="mt-1 text-sm text-[#3D4F5F]">
+              Colar de novo faz o Power BI recusar por nome repetido.
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-1.5">
+              {medidasExistentes.map((nome) => (
+                <li
+                  key={nome}
+                  className="rounded-md bg-[#F6EDEB] px-2 py-1 font-mono text-[11px] text-[#8A3227]"
+                >
+                  {nome}
+                </li>
+              ))}
+            </ul>
+          </article>
+          <article className="rounded-xl border border-[#D5DEE3] bg-white p-4 shadow-sm">
+            <h3 className="text-sm font-semibold text-[#1F8A70]">O que o arquivo adiciona</h3>
+            <p className="mt-1 text-sm text-[#3D4F5F]">
+              Cole na tabela <span className="font-mono text-xs">ffechamentoOficial</span>, um bloco
+              por vez.
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-1.5">
+              {medidasNovas.map((nome) => (
+                <li
+                  key={nome}
+                  className="rounded-md bg-[#E7F4EF] px-2 py-1 font-mono text-[11px] text-[#146A56]"
+                >
+                  {nome}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
       </section>
     </div>
   );

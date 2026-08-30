@@ -1,18 +1,16 @@
 ordem,id,nome,tipo_power_bi,pagina,x,y,largura,altura,medida_ou_campo,observacao
-1,fundo,Fundo da página,página,Spread Previsto,0,0,1280,720,,Exibir → Tamanho da página: 1280 x 720. Fundo #F3F6F7
-2,titulo,Título do relatório,caixa de texto,Spread Previsto,16,12,1248,48,KPI Subtítulo Periodo,Faixa inteira. Não colocar KPI em cima desta faixa
-3,filtro_data,Filtro Data,segmentação,Spread Previsto,16,72,240,48,fSpread[Data],Tipo: entre / relativo. Barra do topo — não vai à direita
-4,filtro_adquirente,Filtro Adquirente,segmentação,Spread Previsto,268,72,240,48,fSpread[Adquirente],Lista suspensa
-5,filtro_bandeira,Filtro Bandeira,segmentação,Spread Previsto,520,72,240,48,fSpread[Bandeira],Lista suspensa
-6,filtro_produto,Filtro Produto,segmentação,Spread Previsto,772,72,240,48,fSpread[Produto],Lista suspensa
-7,filtro_status,Filtro Status,segmentação,Spread Previsto,1024,72,240,48,fSpread[Status Linha],Lista suspensa. Depende da coluna Status Linha
-8,kpi_previsto,KPI Spread previsto,cartão,Spread Previsto,16,136,303,100,Spread Previsto,Formato moeda. Folga de 12 px abaixo do título
-9,kpi_realizado,KPI Spread realizado,cartão,Spread Previsto,331,136,303,100,Spread Realizado,Formato moeda
-10,kpi_divergencia,KPI Divergência,cartão,Spread Previsto,646,136,303,100,Divergência,Formato moeda. Condicional: verde se 0 / vermelho se ≠ 0
-11,kpi_status,KPI Status geral,cartão,Spread Previsto,961,136,303,100,Status Conciliação,Texto. Cor da fonte = medida Status Cor
-12,prod_mdr,Cartão MDR,cartão de várias linhas,Spread Previsto,16,248,408,148,"MDR Previsto, MDR Realizado, MDR Divergência, MDR Status",Um cartão por produto — lado a lado
-13,prod_pix,Cartão Pix,cartão de várias linhas,Spread Previsto,436,248,408,148,"Pix Previsto, Pix Realizado, Pix Divergência, Pix Status",
-14,prod_antecipacao,Cartão Antecipação,cartão de várias linhas,Spread Previsto,856,248,408,148,"Antecipação Previsto, Antecipação Realizado, Antecipação Divergência, Antecipação Status",
-15,tabela_detalhe,Tabela detalhe,tabela,Spread Previsto,16,408,820,296,"Data, Adquirente, Produto, Spread Previsto, Spread Realizado, Divergência, Status Conciliação",Ordenar por |Divergência| decrescente
-16,status_mix,Rosquinha de status,gráfico de rosca,Spread Previsto,852,408,412,140,Status Linha + Qtd Linhas,Legenda à direita: OK / Divergente / Aguardando
-17,regras,Caixa de regras,caixa de texto,Spread Previsto,852,560,412,144,Status Resumo,Texto fixo das regras + medida Status Resumo
+1,fundo,Fundo da página,página,Fechamento,0,0,1280,720,,Exibir → Tamanho da página: 1280 x 720. Fundo #F3F6F7
+2,titulo,Título do relatório,caixa de texto,Fechamento,16,12,1248,48,KPI Subtítulo Periodo,Faixa inteira. Não colocar KPI em cima desta faixa
+3,filtro_competencia,Filtro Competência,segmentação,Fechamento,16,72,300,48,dCompetencia[Competencia],Lista suspensa. Já existe no relatório — só reposicionar
+4,filtro_fluxo,Filtro Fluxo,segmentação,Fechamento,328,72,300,48,dFluxoDax[Fluxo],Lista suspensa. MDR / Pix / Antecipação
+5,filtro_status,Filtro Status,segmentação,Fechamento,640,72,300,48,Status Layout,"Só funciona como coluna. Se não tiver coluna de status, deixe este espaço vazio"
+6,filtro_extra,Espaço livre,—,Fechamento,952,72,312,48,,Reservado. Use para adquirente ou bandeira se existir no modelo
+7,kpi_previsto,KPI Previsto,cartão,Fechamento,16,136,303,100,Previsto por Fluxo,Formato moeda
+8,kpi_oficial,KPI Oficial,cartão,Fechamento,331,136,303,100,Oficial por Fluxo,Formato moeda
+9,kpi_diferenca,KPI Diferença,cartão,Fechamento,646,136,303,100,Diferença,Formato moeda. Condicional: verde se 0 / vermelho se ≠ 0
+10,kpi_status,KPI Status geral,cartão,Fechamento,961,136,303,100,Status Layout,Texto. Cor da fonte = medida Status Cor
+11,tabela_fluxo,Conciliação por fluxo,tabela,Fechamento,16,248,820,148,"dFluxoDax[Fluxo], Previsto por Fluxo, Oficial por Fluxo, Diferença, Diferença %, Status Layout",Visual que você já tem no topo — só reposicionar
+12,resumo_status,Resumo de status,cartão de várias linhas,Fechamento,852,248,412,148,"Qtd Fluxos OK, Qtd Fluxos Divergente, Qtd Fluxos Aguardando",Substitui a rosquinha. Status é medida — não vira legenda de gráfico
+13,tabela_detalhe,Detalhe por fluxo,tabela,Fechamento,16,408,820,296,"dFluxoDax[Fluxo], Volume Transacionado, Custo Previsto, Transações Previstas, Spread Previsto",Visual que você já tem embaixo. Ordenar por Diferença Abs decrescente
+14,cards_spread,Spread por fluxo,cartão de várias linhas,Fechamento,852,408,412,148,"Spread Previsto, Spread Oficial, Diferença",Substitui a fileira solta de cartões Spread Previsto MDR / Pix / Antecipação
+15,regras,Caixa de regras,caixa de texto,Fechamento,852,568,412,136,Status Resumo,Texto fixo das regras + medida Status Resumo

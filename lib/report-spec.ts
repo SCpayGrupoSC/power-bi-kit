@@ -2,20 +2,18 @@ export const CANVAS = { width: 1280, height: 720 } as const;
 
 export type VisualId =
   | "titulo"
-  | "filtro_data"
-  | "filtro_adquirente"
-  | "filtro_bandeira"
-  | "filtro_produto"
+  | "filtro_competencia"
+  | "filtro_fluxo"
   | "filtro_status"
+  | "filtro_extra"
   | "kpi_previsto"
-  | "kpi_realizado"
-  | "kpi_divergencia"
+  | "kpi_oficial"
+  | "kpi_diferenca"
   | "kpi_status"
-  | "prod_mdr"
-  | "prod_pix"
-  | "prod_antecipacao"
+  | "tabela_fluxo"
+  | "resumo_status"
   | "tabela_detalhe"
-  | "status_mix"
+  | "cards_spread"
   | "regras";
 
 export type VisualRect = {
@@ -27,7 +25,7 @@ export type VisualRect = {
   w: number;
   h: number;
   medida: string;
-  grupo: "titulo" | "filtro" | "kpi" | "produto" | "detalhe" | "status";
+  grupo: "titulo" | "filtro" | "kpi" | "fluxo" | "detalhe" | "status";
 };
 
 export const visuaisPropostos: VisualRect[] = [
@@ -43,91 +41,80 @@ export const visuaisPropostos: VisualRect[] = [
     grupo: "titulo",
   },
   {
-    id: "filtro_data",
-    nome: "Data",
+    id: "filtro_competencia",
+    nome: "Competência",
     tipo: "Segmentação",
     x: 16,
     y: 72,
-    w: 240,
+    w: 300,
     h: 48,
-    medida: "fSpread[Data]",
+    medida: "dCompetencia[Competencia]",
     grupo: "filtro",
   },
   {
-    id: "filtro_adquirente",
-    nome: "Adquirente",
+    id: "filtro_fluxo",
+    nome: "Fluxo",
     tipo: "Segmentação",
-    x: 268,
+    x: 328,
     y: 72,
-    w: 240,
+    w: 300,
     h: 48,
-    medida: "fSpread[Adquirente]",
-    grupo: "filtro",
-  },
-  {
-    id: "filtro_bandeira",
-    nome: "Bandeira",
-    tipo: "Segmentação",
-    x: 520,
-    y: 72,
-    w: 240,
-    h: 48,
-    medida: "fSpread[Bandeira]",
-    grupo: "filtro",
-  },
-  {
-    id: "filtro_produto",
-    nome: "Produto",
-    tipo: "Segmentação",
-    x: 772,
-    y: 72,
-    w: 240,
-    h: 48,
-    medida: "fSpread[Produto]",
+    medida: "dFluxoDax[Fluxo]",
     grupo: "filtro",
   },
   {
     id: "filtro_status",
     nome: "Status",
     tipo: "Segmentação",
-    x: 1024,
+    x: 640,
     y: 72,
-    w: 240,
+    w: 300,
     h: 48,
-    medida: "fSpread[Status Linha]",
+    medida: "Status Layout (precisa de coluna)",
+    grupo: "filtro",
+  },
+  {
+    id: "filtro_extra",
+    nome: "Espaço livre",
+    tipo: "Reservado",
+    x: 952,
+    y: 72,
+    w: 312,
+    h: 48,
+    medida: "adquirente ou bandeira, se existir",
     grupo: "filtro",
   },
   {
     id: "kpi_previsto",
-    nome: "Spread previsto",
+    nome: "Previsto",
     tipo: "Cartão",
     x: 16,
     y: 136,
     w: 303,
     h: 100,
-    medida: "Spread Previsto",
+    medida: "Previsto por Fluxo",
     grupo: "kpi",
   },
   {
-    id: "kpi_realizado",
-    nome: "Spread realizado",
+    id: "kpi_oficial",
+    nome: "Oficial",
     tipo: "Cartão",
     x: 331,
     y: 136,
     w: 303,
     h: 100,
-    medida: "Spread Realizado",
+    medida: "Oficial por Fluxo",
     grupo: "kpi",
   },
   {
-    id: "kpi_divergencia",
-    nome: "Divergência",
+    id: "kpi_diferenca",
+    nome: "Diferença",
     tipo: "Cartão",
     x: 646,
     y: 136,
     w: 303,
     h: 100,
-    medida: "Divergência",
+    medida: "Diferença",
     grupo: "kpi",
   },
   {
@@ -138,72 +125,61 @@ export const visuaisPropostos: VisualRect[] = [
     y: 136,
     w: 303,
     h: 100,
-    medida: "Status Conciliação",
+    medida: "Status Layout + Status Cor",
     grupo: "kpi",
   },
   {
-    id: "prod_mdr",
-    nome: "MDR",
-    tipo: "Cartão várias linhas",
+    id: "tabela_fluxo",
+    nome: "Conciliação por fluxo",
+    tipo: "Tabela",
     x: 16,
     y: 248,
-    w: 408,
+    w: 820,
     h: 148,
-    medida: "MDR Previsto · Realizado · Divergência · Status",
-    grupo: "produto",
+    medida: "Fluxo, Previsto, Oficial, Diferença, Diferença %, Status",
+    grupo: "fluxo",
   },
   {
-    id: "prod_pix",
-    nome: "Pix",
+    id: "resumo_status",
+    nome: "Resumo de status",
     tipo: "Cartão várias linhas",
-    x: 436,
+    x: 852,
     y: 248,
-    w: 408,
+    w: 412,
     h: 148,
-    medida: "Pix Previsto · Realizado · Divergência · Status",
-    grupo: "produto",
-  },
-  {
-    id: "prod_antecipacao",
-    nome: "Antecipação",
-    tipo: "Cartão várias linhas",
-    x: 856,
-    y: 248,
-    w: 408,
-    h: 148,
-    medida: "Antecipação Previsto · Realizado · Divergência · Status",
-    grupo: "produto",
+    medida: "Qtd Fluxos OK · Divergente · Aguardando",
+    grupo: "status",
   },
   {
     id: "tabela_detalhe",
-    nome: "Tabela detalhe",
+    nome: "Detalhe por fluxo",
     tipo: "Tabela",
     x: 16,
     y: 408,
     w: 820,
     h: 296,
-    medida: "Data, Adquirente, Produto, medidas, Status",
+    medida: "Volume Transacionado, Custo Previsto, Transações Previstas, Spread Previsto",
     grupo: "detalhe",
   },
   {
-    id: "status_mix",
-    nome: "Rosquinha de status",
-    tipo: "Rosca",
+    id: "cards_spread",
+    nome: "Spread por fluxo",
+    tipo: "Cartão várias linhas",
     x: 852,
     y: 408,
     w: 412,
-    h: 140,
-    medida: "Status Linha + Qtd Linhas",
-    grupo: "status",
+    h: 148,
+    medida: "Spread Previsto, Spread Oficial, Diferença",
+    grupo: "fluxo",
   },
   {
     id: "regras",
     nome: "Regras de status",
     tipo: "Caixa de texto",
     x: 852,
-    y: 560,
+    y: 568,
     w: 412,
-    h: 144,
+    h: 136,
     medida: "Status Resumo",
     grupo: "status",
   },
@@ -222,69 +198,47 @@ export const visuaisAntes: VisualRect[] = [
     grupo: "titulo",
   },
   {
-    id: "kpi_previsto",
-    nome: "KPIs",
-    tipo: "Cartões",
+    id: "tabela_fluxo",
+    nome: "Conciliação por fluxo",
+    tipo: "Tabela",
     x: 16,
-    y: 28,
+    y: 40,
+    w: 700,
+    h: 150,
+    medida: "cobre a faixa do título",
+    grupo: "fluxo",
+  },
+  {
+    id: "cards_spread",
+    nome: "Cartões de spread",
+    tipo: "Cartões soltos",
+    x: 16,
+    y: 205,
     w: 700,
     h: 90,
-    medida: "cartões empilhados no título",
+    medida: "MDR, Pix e Antecipação soltos numa fileira",
     grupo: "kpi",
   },
   {
-    id: "prod_mdr",
-    nome: "MDR",
-    tipo: "Cartão",
-    x: 16,
-    y: 130,
-    w: 720,
-    h: 140,
-    medida: "MDR",
-    grupo: "produto",
-  },
-  {
-    id: "prod_pix",
-    nome: "Pix",
-    tipo: "Cartão",
-    x: 16,
-    y: 280,
-    w: 720,
-    h: 140,
-    medida: "Pix",
-    grupo: "produto",
-  },
-  {
-    id: "prod_antecipacao",
-    nome: "Antecipação",
-    tipo: "Cartão",
-    x: 16,
-    y: 430,
-    w: 720,
-    h: 140,
-    medida: "Antecipação",
-    grupo: "produto",
-  },
-  {
     id: "tabela_detalhe",
-    nome: "Tabela",
+    nome: "Detalhe por fluxo",
     tipo: "Tabela",
     x: 16,
-    y: 580,
-    w: 720,
-    h: 124,
-    medida: "detalhe",
+    y: 310,
+    w: 700,
+    h: 394,
+    medida: "empilhado à esquerda",
     grupo: "detalhe",
   },
   {
-    id: "filtro_data",
-    nome: "Filtros",
-    tipo: "Segmentações",
-    x: 780,
-    y: 12,
-    w: 484,
-    h: 696,
-    medida: "todos os filtros isolados",
+    id: "filtro_competencia",
+    nome: "Filtro Competência",
+    tipo: "Segmentação",
+    x: 760,
+    y: 310,
+    w: 300,
+    h: 60,
+    medida: "isolado, longe do que filtra",
     grupo: "filtro",
   },
 ];
@@ -301,11 +255,11 @@ export type WizardStep = {
 export const wizardSteps: WizardStep[] = [
   {
     id: 1,
-    titulo: "Criar a página e travar o tamanho",
+    titulo: "Travar o tamanho da página",
     noPowerBi:
-      "Exibir → Tamanho da página → Tipo: Personalizado → 1280 de largura e 720 de altura.",
+      "Clique num espaço vazio → Exibir → Tamanho da página → Tipo: Personalizado → 1280 de largura e 720 de altura.",
     detalhe:
-      "Sem esse tamanho, os números do CSV não fecham. Fundo da página: #F3F6F7.",
+      "Sem esse tamanho, os números de posição não fecham. Fundo da página: #F3F6F7.",
     highlight: [],
   },
   {
@@ -313,44 +267,38 @@ export const wizardSteps: WizardStep[] = [
     titulo: "Importar o tema visual",
     noPowerBi: "Exibir → Temas → Procurar temas → escolha tema-conciliacao-spread.json.",
     detalhe:
-      "Isso já aplica as cores de OK (verde), Aguardando (âmbar) e Divergente (vermelho), além das bordas dos cartões.",
+      "O tema é o arquivo .json. Ele não entra na caixa de medida — se colar lá, o Power BI acusa erro de caracteres especiais.",
     highlight: [],
     arquivo: "tema",
   },
   {
     id: 3,
+    titulo: "Criar só as medidas que faltam",
+    noPowerBi:
+      "Troque a Tabela inicial para ffechamentoOficial → Nova medida. Cole um bloco por vez de medidas-layout.dax.",
+    detalhe:
+      "Previsto por Fluxo, Oficial por Fluxo, Diferença e Status Validação já existem — não recrie. O arquivo só adiciona Status Layout, Status Cor, Diferença Abs, as contagens e os textos.",
+    highlight: ["kpi_status"],
+    arquivo: "dax",
+  },
+  {
+    id: 4,
     titulo: "Colocar o título em faixa inteira",
     noPowerBi: "Inserir → Caixa de texto. Formato → Posição: X 16, Y 12, Largura 1248, Altura 48.",
     detalhe:
-      "O título ocupa a largura toda. Nenhum cartão pode ficar em cima desta faixa — era o que quebrava o layout antigo.",
+      "O título ocupa a largura toda. Nenhum visual pode ficar em cima desta faixa — era o que quebrava o layout antigo.",
     highlight: ["titulo"],
     arquivo: "csv",
   },
   {
-    id: 4,
+    id: 5,
     titulo: "Montar a barra de filtros no topo",
     noPowerBi:
-      "Cinco segmentações em linha: Data, Adquirente, Bandeira, Produto e Status. Todas com altura 48, Y 72.",
+      "Competência e Fluxo em linha, Y 72, altura 48. O filtro de Competência você já tem — é só reposicionar.",
     detalhe:
-      "Os filtros saem da coluna da direita e viram uma barra. No Power BI, mude cada uma para lista suspensa (exceto Data).",
-    highlight: [
-      "filtro_data",
-      "filtro_adquirente",
-      "filtro_bandeira",
-      "filtro_produto",
-      "filtro_status",
-    ],
+      "Os filtros saem da coluna da direita e viram uma barra logo abaixo do título. Mude cada um para lista suspensa.",
+    highlight: ["filtro_competencia", "filtro_fluxo", "filtro_status", "filtro_extra"],
     arquivo: "csv",
-  },
-  {
-    id: 5,
-    titulo: "Criar as medidas e o status",
-    noPowerBi:
-      "Modelagem → Nova medida. Cole um bloco de cada vez de medidas-layout.dax. Depois crie a coluna Status Linha.",
-    detalhe:
-      "Aguardando = falta previsto ou realizado. OK = diferença até R$ 0,01. Divergente = acima disso. Troque fSpread se a tabela tiver outro nome.",
-    highlight: ["kpi_status"],
-    arquivo: "dax",
   },
   {
     id: 6,
@@ -358,42 +306,42 @@ export const wizardSteps: WizardStep[] = [
     noPowerBi:
       "Quatro cartões na linha Y 136, altura 100. Folga de 12 px abaixo do título — eles não se tocam.",
     detalhe:
-      "Spread previsto · Spread realizado · Divergência · Status Conciliação. No cartão de status, use formatação condicional com a medida Status Cor.",
-    highlight: ["kpi_previsto", "kpi_realizado", "kpi_divergencia", "kpi_status"],
+      "Previsto por Fluxo · Oficial por Fluxo · Diferença · Status Layout. No cartão de status, use formatação condicional de cor da fonte com a medida Status Cor.",
+    highlight: ["kpi_previsto", "kpi_oficial", "kpi_diferenca", "kpi_status"],
     arquivo: "csv",
   },
   {
     id: 7,
-    titulo: "Cartões MDR, Pix e Antecipação",
+    titulo: "Conciliação por fluxo e resumo de status",
     noPowerBi:
-      "Três cartões de várias linhas, lado a lado, Y 248. Cada um com previsto, realizado, divergência e status do produto.",
+      "A tabela de conciliação que já está no topo do relatório vai para X 16, Y 248. Ao lado dela, o resumo de status em X 852.",
     detalhe:
-      "Assim o miolo deixa de ser uma pilha à esquerda e vira três colunas iguais.",
-    highlight: ["prod_mdr", "prod_pix", "prod_antecipacao"],
+      "A tabela leva Fluxo, Previsto por Fluxo, Oficial por Fluxo, Diferença, Diferença % e Status Layout. O resumo é um cartão de várias linhas com as três contagens.",
+    highlight: ["tabela_fluxo", "resumo_status"],
     arquivo: "csv",
   },
   {
     id: 8,
-    titulo: "Tabela, rosca e regras",
+    titulo: "Detalhe, spread e regras",
     noPowerBi:
-      "Tabela à esquerda (X 16, Y 408). Rosca de status e caixa de regras empilhadas à direita.",
+      "Tabela de detalhe à esquerda (X 16, Y 408). Cartões de spread e caixa de regras empilhados à direita.",
     detalhe:
-      "Na tabela: Data, Adquirente, Produto e as medidas. Ordene pela divergência absoluta, maior primeiro.",
-    highlight: ["tabela_detalhe", "status_mix", "regras"],
+      "O detalhe leva Volume Transacionado, Custo Previsto, Transações Previstas e Spread Previsto. Ordene por Diferença Abs, maior primeiro.",
+    highlight: ["tabela_detalhe", "cards_spread", "regras"],
     arquivo: "csv",
   },
   {
     id: 9,
     titulo: "Conferir e gravar",
     noPowerBi:
-      "Clique em um espaço vazio da página. Confira se o título está livre, os filtros estão no topo e o status pinta certo.",
+      "Clique num espaço vazio da página. Confira se o título está livre, os filtros estão no topo e o status pinta certo.",
     detalhe:
-      "Se algum visual estiver deslocado, abra posicoes-visuais.csv e copie X / Y / Largura / Altura de novo. Depois salve o .pbix.",
+      "Se os cartões estiverem vazios, clique em Atualizar agora — falta dado no lado oficial, e o status deve mostrar Aguardando. Depois salve o .pbix.",
     highlight: [
       "titulo",
-      "filtro_data",
+      "filtro_competencia",
       "kpi_previsto",
-      "prod_mdr",
+      "tabela_fluxo",
       "tabela_detalhe",
     ],
   },
@@ -410,9 +358,9 @@ export const kitFiles = [
   {
     id: "dax" as const,
     nome: "medidas-layout.dax",
-    titulo: "Medidas DAX",
+    titulo: "Medidas que faltam",
     descricao:
-      "Contas dos cartões e status Aguardando / OK / Divergente. Uma medida por bloco.",
+      "Status Layout, Status Cor, contagens e textos. O que já existe no modelo fica de fora.",
     href: "/power-bi-kit/medidas-layout.dax",
   },
   {
@@ -426,15 +374,64 @@ export const kitFiles = [
 
 export const problemasAntes = [
   {
-    titulo: "KPIs em cima do título",
-    texto: "O bloco de cartões começava em Y 28 e cobria a faixa do título.",
+    titulo: "Tabela em cima do título",
+    texto: "A conciliação por fluxo começava na altura da faixa do título e cobria o texto.",
   },
   {
     titulo: "Tudo empilhado à esquerda",
-    texto: "MDR, Pix, Antecipação e tabela iam um embaixo do outro, numa coluna só.",
+    texto: "Conciliação, cartões de spread e detalhe iam um embaixo do outro, numa coluna só.",
   },
   {
     titulo: "Filtro isolado à direita",
-    texto: "As segmentações ocupavam uma coluna inteira, longe do que elas filtram.",
+    texto: "A segmentação de competência ficava sozinha, longe dos visuais que ela filtra.",
   },
+];
+
+export const modeloReal = [
+  {
+    tabela: "fPrevisto",
+    papel: "Lado previsto",
+    campos: "Volume Transacionado, Custo Previsto, Transações Previstas, Spread Previsto",
+  },
+  {
+    tabela: "ffechamentoOficial",
+    papel: "Lado oficial",
+    campos: "Previsto por Fluxo, Oficial por Fluxo, Diferença, Diferença %, Status Validação",
+  },
+  {
+    tabela: "dFluxoDax",
+    papel: "Produto",
+    campos: "Fluxo — MDR, Pix, Antecipação",
+  },
+  {
+    tabela: "dCompetencia",
+    papel: "Período",
+    campos: "Competencia",
+  },
+];
+
+export const medidasExistentes = [
+  "Previsto por Fluxo",
+  "Oficial por Fluxo",
+  "Diferença",
+  "Diferença %",
+  "Diferença Total",
+  "Status Validação",
+  "Spread Previsto",
+  "Spread Oficial",
+  "Volume Transacionado",
+  "Custo Previsto",
+  "Transações Previstas",
+];
+
+export const medidasNovas = [
+  "Tolerância R$",
+  "Diferença Abs",
+  "Status Layout",
+  "Status Cor",
+  "Qtd Fluxos OK",
+  "Qtd Fluxos Divergente",
+  "Qtd Fluxos Aguardando",
+  "Status Resumo",
+  "KPI Subtítulo Periodo",
 ];
