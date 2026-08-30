@@ -3,7 +3,7 @@ import { KitPanel } from "@/components/kit-panel";
 
 export default function PecasPage() {
   return (
-    <SiteChrome>
+    <SiteChrome pathname="/pecas">
       <KitPanel />
     </SiteChrome>
   );

@@ -1,6 +1,12 @@
 import { SiteNav } from "@/components/site-nav";
 
-export function SiteChrome({ children }: { children: React.ReactNode }) {
+export function SiteChrome({
+  pathname,
+  children,
+}: {
+  pathname: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex min-h-full flex-col">
       <header className="border-b border-[#D5DEE3] bg-[#0B3D4A] text-white">
@@ -19,7 +25,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       </header>
 
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
-        <SiteNav />
+        <SiteNav pathname={pathname} />
         {children}
       </main>
 

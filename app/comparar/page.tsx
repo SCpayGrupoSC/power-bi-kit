@@ -3,7 +3,7 @@ import { SiteChrome } from "@/components/site-chrome";
 
 export default function CompararPage() {
   return (
-    <SiteChrome>
+    <SiteChrome pathname="/comparar">
       <CompareView />
     </SiteChrome>
   );

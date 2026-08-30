@@ -3,7 +3,7 @@ import { SiteChrome } from "@/components/site-chrome";
 
 export default function LayoutPropostoPage() {
   return (
-    <SiteChrome>
+    <SiteChrome pathname="/layout-proposto">
       <ProposedLayout />
     </SiteChrome>
   );

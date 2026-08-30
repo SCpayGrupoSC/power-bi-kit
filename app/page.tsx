@@ -3,7 +3,7 @@ import { SiteChrome } from "@/components/site-chrome";
 
 export default function Home() {
   return (
-    <SiteChrome>
+    <SiteChrome pathname="/">
       <HomePanel />
     </SiteChrome>
   );
