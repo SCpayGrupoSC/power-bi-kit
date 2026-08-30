@@ -6,7 +6,7 @@ Relatório: **Fechamento** (conciliação Spread previsto — MDR, Pix, Antecipa
 Arquivo: `.pbix` no Power BI Desktop
 Tela: **1280 × 720**
 
-Paleta: **SCpay** (`tema-scpay.json`).
+Paleta: **SCpay** (`tema-scpay-v2.json` já importado).
 Checklist em `/estado`; o assistente abre no primeiro passo pendente.
 
 ---
@@ -50,29 +50,19 @@ Clique em **Atualizar agora** na faixa amarela antes de conferir números.
   e `Diferença Abs`
 - [x] **Tabela de detalhe** em 16 · 408 · 820 · 296
 - [x] Os 4 cartões soltos de Spread apagados
+- [x] Tema **`tema-scpay-v2.json`** importado (formato clássico de 5 chaves)
 
 ---
 
 ## Pendente — comece aqui
 
-### 1. Tema e cores da marca
+### 1. Status Cor nas cores da marca
 
-- [ ] Apague da pasta **Downloads** qualquer `tema-scpay.json` antigo
-- [ ] Baixe **`tema-scpay-v2.json`**
-- [ ] **Exibir → Temas → Procurar temas** → só esse arquivo
-
-O v2 tem 5 chaves: `name`, `dataColors`, `background`, `foreground`,
-`tableAccent`. É o formato clássico do Power BI. Abra no Bloco de Notas:
-se aparecer `firstLevelElements`, `visualStyles` ou mais de ~20 linhas,
-ainda é o arquivo velho.
-
-As cores de cartão e cabeçalho de tabela entram depois, quando o import
-passar. O status continua na medida `Status Cor`.
-
-- [ ] Abrir a medida **`Status Cor`** e substituir a fórmula pela versão da
-  marca (teal no OK, laranja no Aguardando, vermelho do logo na divergência)
+- [ ] Abrir a medida **`Status Cor`** e substituir a fórmula (teal no OK,
+  laranja no Aguardando, vermelho do logo na divergência)
 
 O tema **não** muda a cor do status. Ela está escrita dentro do DAX.
+Na tela atual o **Aguardando** ainda está navy — é este passo que pinta.
 
 ### 2. Cor da fonte por status
 
