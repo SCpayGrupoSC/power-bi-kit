@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { kitFiles } from "@/lib/report-spec";
 
 export function HomePanel() {
@@ -16,6 +17,26 @@ export function HomePanel() {
             montagem: título tapado pelos KPIs, blocos empilhados à esquerda e filtro isolado à
             direita. Este assistente devolve a ordem de colagem, o tema, as medidas e as posições.
           </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <Link
+              href="/passo-a-passo"
+              className="inline-flex h-8 items-center rounded-lg bg-[#0B3D4A] px-3 text-sm text-white"
+            >
+              Abrir o passo a passo
+            </Link>
+            <Link
+              href="/pecas"
+              className="inline-flex h-8 items-center rounded-lg border border-[#D5DEE3] bg-white px-3 text-sm text-[#0B3D4A]"
+            >
+              Baixar as peças
+            </Link>
+            <Link
+              href="/comparar"
+              className="inline-flex h-8 items-center rounded-lg border border-[#D5DEE3] bg-white px-3 text-sm text-[#0B3D4A]"
+            >
+              Ver antes e depois
+            </Link>
+          </div>
         </div>
         <aside className="rounded-xl border border-[#D5DEE3] bg-white p-4 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7A8B99]">
@@ -48,6 +69,9 @@ export function HomePanel() {
             <h2 className="mt-1 text-base font-semibold text-[#0B3D4A]">{file.titulo}</h2>
             <p className="mt-2 text-sm leading-relaxed text-[#3D4F5F]">{file.descricao}</p>
             <p className="mt-3 font-mono text-xs text-[#0B3D4A]">{file.nome}</p>
+            <Link href="/pecas" className="mt-3 inline-block text-sm text-[#0B3D4A] underline">
+              Abrir para baixar
+            </Link>
           </article>
         ))}
       </section>

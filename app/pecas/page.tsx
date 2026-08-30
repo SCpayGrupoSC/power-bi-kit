@@ -1,10 +1,10 @@
-import { HomePanel } from "@/components/home-panel";
 import { SiteChrome } from "@/components/site-chrome";
+import { KitPanel } from "@/components/kit-panel";
 
-export default function Home() {
+export default function PecasPage() {
   return (
     <SiteChrome>
-      <HomePanel />
+      <KitPanel />
     </SiteChrome>
   );
 }
