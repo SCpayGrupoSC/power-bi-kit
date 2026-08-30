@@ -424,6 +424,49 @@ export const medidasExistentes = [
   "Transações Previstas",
 ];
 
+export const ondeUsarMedidas = [
+  {
+    medida: "Status Layout",
+    destino: "KPI Status geral + coluna da tabela de conciliação",
+    como: "Arraste para o campo de valor do cartão.",
+  },
+  {
+    medida: "Status Cor",
+    destino: "Nenhum visual",
+    como: "Só em Formatação condicional → Cor da fonte → Formato do campo.",
+  },
+  {
+    medida: "Qtd Fluxos OK",
+    destino: "Cartão Resumo de status",
+    como: "Os três juntos, num cartão de várias linhas.",
+  },
+  {
+    medida: "Qtd Fluxos Divergente",
+    destino: "Cartão Resumo de status",
+    como: "Junto com as outras duas contagens.",
+  },
+  {
+    medida: "Qtd Fluxos Aguardando",
+    destino: "Cartão Resumo de status",
+    como: "Junto com as outras duas contagens.",
+  },
+  {
+    medida: "Diferença Abs",
+    destino: "Última coluna da tabela de conciliação",
+    como: "Clique no cabeçalho para ordenar decrescente.",
+  },
+  {
+    medida: "Status Resumo",
+    destino: "Caixa de texto Regras",
+    como: "Inserir → Caixa de texto → botão Valor, para inserir valor dinâmico.",
+  },
+  {
+    medida: "KPI Subtítulo Periodo",
+    destino: "Caixa de texto do Título",
+    como: "Também como valor dinâmico dentro da caixa de texto.",
+  },
+];
+
 export const medidasNovas = [
   "Diferença Abs",
   "Status Layout",

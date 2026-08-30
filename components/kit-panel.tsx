@@ -5,7 +5,7 @@ import { Download } from "lucide-react";
 import { DownloadLink } from "@/components/download-link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { kitFiles } from "@/lib/report-spec";
+import { kitFiles, ondeUsarMedidas } from "@/lib/report-spec";
 import { copyText } from "@/lib/copy";
 
 const labels: Record<string, string> = {
@@ -99,6 +99,42 @@ export function KitPanel() {
           Carregando os três arquivos para colar…
         </p>
       ) : null}
+
+      <section className="grid gap-3">
+        <div>
+          <h2 className="font-heading text-xl text-[#0B3D4A]">Onde cada medida nova entra</h2>
+          <p className="mt-1 text-sm text-[#3D4F5F]">
+            Criar a medida é metade do trabalho. Esta é a outra metade: em qual visual ela aparece.
+          </p>
+        </div>
+        <div className="overflow-x-auto rounded-xl border border-[#D5DEE3] bg-white shadow-sm">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <thead className="bg-[#EAF0F2] text-xs uppercase tracking-wide text-[#5C6B78]">
+              <tr>
+                <th className="px-4 py-2 font-semibold">Medida</th>
+                <th className="px-4 py-2 font-semibold">Vai para</th>
+                <th className="px-4 py-2 font-semibold">Como</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ondeUsarMedidas.map((item) => (
+                <tr key={item.medida} className="border-t border-[#E6EBEE]">
+                  <td className="px-4 py-2 font-mono text-xs whitespace-nowrap text-[#0B3D4A]">
+                    {item.medida}
+                  </td>
+                  <td className="px-4 py-2 text-[#14202B]">{item.destino}</td>
+                  <td className="px-4 py-2 text-[#3D4F5F]">{item.como}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="rounded-lg border border-[#D4A017]/40 bg-[#FBF3E0] px-3 py-2 text-sm text-[#7A5B0C]">
+          <span className="font-semibold">Status Cor</span> não vai para visual nenhum. Se você
+          arrastar para um cartão, aparece o texto <span className="font-mono">#1F8A70</span> — é
+          código de cor, não informação.
+        </p>
+      </section>
 
       {Object.keys(contents).length > 0 ? (
         <Tabs defaultValue="dax">

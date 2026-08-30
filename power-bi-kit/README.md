@@ -71,6 +71,22 @@ clique em **Nova medida**. Apague a caixa e cole só uma faixa numerada.
 A tolerância de R$ 0,01 está escrita dentro do `Status Layout`
 (linha `VAR Tol = 0.01`). Não existe medida separada de tolerância.
 
+## Onde cada medida nova entra
+
+| Medida | Vai para | Como |
+|---|---|---|
+| `Status Layout` | KPI **Status geral** + coluna da tabela de conciliação | arraste para o campo de valor do cartão |
+| `Status Cor` | **nenhum visual** | é só para Formatação condicional → Cor da fonte → Formato do campo |
+| `Qtd Fluxos OK` | cartão **Resumo de status** | os três juntos, num cartão de várias linhas |
+| `Qtd Fluxos Divergente` | cartão **Resumo de status** | idem |
+| `Qtd Fluxos Aguardando` | cartão **Resumo de status** | idem |
+| `Diferença Abs` | última coluna da tabela de conciliação | clique no cabeçalho para ordenar decrescente |
+| `Status Resumo` | caixa de texto **Regras** | Inserir → Caixa de texto → **Valor** (valor dinâmico) |
+| `KPI Subtítulo Periodo` | caixa de texto do **Título** | idem, valor dinâmico |
+
+`Status Cor` nunca aparece sozinha na tela. Se você arrastar ela para um cartão,
+vai ver o texto `#1F8A70` — é código de cor, não informação.
+
 ## O que este layout corrige
 
 O relatório já estava com as contas certas. O problema era só a montagem:
