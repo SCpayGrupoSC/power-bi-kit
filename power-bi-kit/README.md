@@ -10,8 +10,17 @@ Não precisa saber programar. A ordem certa está no assistente (aba **Passo a p
 | Arquivo | Para que serve | Onde entra no Power BI |
 |---|---|---|
 | `tema-conciliacao-spread.json` | Cores, fontes e borda dos visuais | **Exibir → Temas → Procurar temas** |
-| `medidas-layout.dax` | As medidas que **faltam** no modelo (status, cor, contagens) | **Modelagem → Nova medida** (uma por bloco) |
+| `medidas-layout.dax` | As 8 medidas que **faltam** no modelo (status, cor, contagens) | **Modelagem → Nova medida** — uma medida por clique |
 | `posicoes-visuais.csv` | X, Y, largura e altura de cada peça | **Formato → Geral → Propriedades → Posição** |
+
+## A regra que evita 90% dos erros
+
+**1 medida = 1 clique em "Nova medida".**
+
+O arquivo tem 8 medidas, numeradas de 1 a 8, cada uma entre linhas `=====`.
+Copie o conteúdo de **uma** faixa, cole, Enter, e só então clique em
+**Nova medida** outra vez para a seguinte. Siga a ordem 1 → 8: as de baixo
+usam as de cima.
 
 ## Erros comuns
 
@@ -32,8 +41,11 @@ Com a medida `Status Layout`, esse caso passa a mostrar **Aguardando** em vez de
 
 **"O valor de X não pode ser determinado. A coluna não existe..."**
 A fórmula cita uma medida que ainda não foi criada, então o Power BI tenta
-lê-la como coluna. Cole os blocos na ordem do arquivo: `Status Layout` antes
-de `Status Cor`, e `Qtd Fluxos ...` antes de `Status Resumo`.
+lê-la como coluna. Cole na ordem numerada do arquivo.
+
+**"A sintaxe de X está incorreta"**
+Você colou mais de uma medida na mesma caixa. Cada medida precisa do próprio
+clique em **Nova medida**. Apague a caixa e cole só uma faixa numerada.
 
 ## Modelo deste relatório
 

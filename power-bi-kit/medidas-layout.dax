@@ -1,67 +1,62 @@
--- ============================================================
--- Conciliação Spread Previsto — medidas que FALTAM no modelo
--- Power BI Desktop → Modelagem → Nova medida
--- Cole UM bloco por vez (do nome até o último parêntese).
+-- ############################################################
 --
--- ANTES DE COLAR: no topo da barra de fórmula existe
--- "Tabela inicial". Troque para ffechamentoOficial.
+--   CONCILIAÇÃO SPREAD PREVISTO — 8 MEDIDAS PARA CRIAR
 --
--- Cada bloco abaixo funciona sozinho, na ordem em que aparece.
--- Nenhum depende de medida que você ainda não criou.
--- ============================================================
+--   REGRA DE OURO: 1 medida = 1 clique em "Nova medida".
+--   Nunca cole duas medidas na mesma caixa. Se colar, o Power BI
+--   acusa "A sintaxe de X está incorreta".
 --
--- MODELO REAL DESTE RELATÓRIO
+--   Para cada medida abaixo:
+--     1. Modelagem → Nova medida
+--     2. confira que "Tabela inicial" está em ffechamentoOficial
+--     3. copie SÓ o que está entre as linhas =====
+--     4. Enter
+--     5. repita para a próxima
 --
---   fPrevisto            → lado previsto
---                          Volume Transacionado, Custo Previsto,
---                          Transações Previstas, Venda Prevista,
---                          Spread Previsto
+--   Siga a ordem 1 → 8. As de baixo usam as de cima.
 --
---   ffechamentoOficial   → lado oficial / realizado
---                          billing_amount, Cobranças Oficiais,
---                          Spread Oficial, Previsto por Fluxo,
---                          Oficial por Fluxo, Diferença,
---                          Diferença %, Diferença Total,
---                          Status Validação
+-- ############################################################
 --
---   dFluxoDax[Fluxo]     → MDR | Pix | Antecipação
---   dCompetencia[Competencia] → competência (mês)
+--   MODELO REAL DESTE RELATÓRIO
 --
--- ============================================================
--- NÃO RECRIE ESTAS — JÁ EXISTEM NO SEU MODELO
+--     fPrevisto            → lado previsto
+--     ffechamentoOficial   → lado oficial / realizado
+--     dFluxoDax[Fluxo]     → MDR | Pix | Antecipação
+--     dCompetencia[Competencia] → competência (mês)
 --
---   Previsto por Fluxo · Oficial por Fluxo
---   Diferença · Diferença % · Diferença Total
---   Status Validação
---   Spread Previsto · Spread Oficial
---   Volume Transacionado · Custo Previsto · Transações Previstas
+--   JÁ EXISTEM — NÃO RECRIE:
+--     Previsto por Fluxo · Oficial por Fluxo · Diferença
+--     Diferença % · Diferença Total · Status Validação
+--     Spread Previsto · Spread Oficial
+--     Volume Transacionado · Custo Previsto · Transações Previstas
 --
--- Se colar de novo, o Power BI recusa por nome repetido.
--- ============================================================
+-- ############################################################
 
 
--- ------------------------------------------------------------
--- 1) Diferença absoluta
---    Serve para ordenar a tabela de detalhe da maior divergência
---    para a menor.
--- ------------------------------------------------------------
+
+
+-- ============================================================
+-- MEDIDA 1 de 8 — Diferença Abs
+-- Para ordenar a tabela pela maior divergência.
+-- Copie as 2 linhas abaixo.
+-- ============================================================
+
 Diferença Abs =
 ABS ( [Diferença] )
 
+-- ===================== fim da medida 1 ======================
 
--- ------------------------------------------------------------
--- 2) Status com o estado "Aguardando"   ← COLE ESTE PRIMEIRO
---
---    Hoje o seu Status Validação devolve "—" quando o oficial
---    ainda não chegou. Isso confunde: parece divergência quando
---    é só dado que falta.
---
---    A tolerância está escrita direto na linha "VAR Tol = 0.01".
---    Se a regra do time mudar, é esse número que você troca.
---
---    Cole como medida NOVA (Status Layout), confira, e só depois
---    (se quiser) troque a fórmula do seu Status Validação.
--- ------------------------------------------------------------
+
+
+
+-- ============================================================
+-- MEDIDA 2 de 8 — Status Layout
+-- O status com o estado "Aguardando".
+-- A tolerância é a linha VAR Tol = 0.01 — mude só esse número
+-- se a regra do time for outra.
+-- Copie as 14 linhas abaixo.
+-- ============================================================
+
 Status Layout =
 VAR Tol = 0.01
 VAR Previsto = [Previsto por Fluxo]
@@ -77,13 +72,19 @@ RETURN
         "Divergente"
     )
 
+-- ===================== fim da medida 2 ======================
 
--- ------------------------------------------------------------
--- 3) Cor do status
---    Use em Formatação condicional → Cor da fonte →
---    Formato do campo → esta medida.
---    Depende do Status Layout (bloco 2).
--- ------------------------------------------------------------
+
+
+
+-- ============================================================
+-- MEDIDA 3 de 8 — Status Cor
+-- Use em Formatação condicional → Cor da fonte →
+-- Formato do campo → esta medida.
+-- Precisa da medida 2.
+-- Copie as 8 linhas abaixo.
+-- ============================================================
+
 Status Cor =
 SWITCH (
     [Status Layout],
@@ -93,37 +94,85 @@ SWITCH (
     "#7A8B99"
 )
 
+-- ===================== fim da medida 3 ======================
 
--- ------------------------------------------------------------
--- 4) Contagem de fluxos por status
---    Conta MDR / Pix / Antecipação, não linhas da tabela fato.
---    Depende do Status Layout (bloco 2).
--- ------------------------------------------------------------
+
+
+
+-- ============================================================
+-- MEDIDA 4 de 8 — Qtd Fluxos OK
+-- Conta MDR / Pix / Antecipação, não linhas da tabela fato.
+-- Precisa da medida 2.
+-- Copie as 4 linhas abaixo. NÃO junte com a medida 5.
+-- ============================================================
+
 Qtd Fluxos OK =
 COUNTROWS (
     FILTER ( VALUES ( dFluxoDax[Fluxo] ), [Status Layout] = "OK" )
 ) + 0
+
+-- ===================== fim da medida 4 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 5 de 8 — Qtd Fluxos Divergente
+-- Clique em "Nova medida" ANTES de colar.
+-- Copie as 4 linhas abaixo.
+-- ============================================================
 
 Qtd Fluxos Divergente =
 COUNTROWS (
     FILTER ( VALUES ( dFluxoDax[Fluxo] ), [Status Layout] = "Divergente" )
 ) + 0
 
+-- ===================== fim da medida 5 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 6 de 8 — Qtd Fluxos Aguardando
+-- Clique em "Nova medida" ANTES de colar.
+-- Copie as 4 linhas abaixo.
+-- ============================================================
+
 Qtd Fluxos Aguardando =
 COUNTROWS (
     FILTER ( VALUES ( dFluxoDax[Fluxo] ), [Status Layout] = "Aguardando" )
 ) + 0
 
+-- ===================== fim da medida 6 ======================
 
--- ------------------------------------------------------------
--- 5) Textos prontos para os cartões e a caixa de regras
---    Status Resumo depende do bloco 4.
--- ------------------------------------------------------------
+
+
+
+-- ============================================================
+-- MEDIDA 7 de 8 — Status Resumo
+-- Texto para a caixa de regras.
+-- Precisa das medidas 4, 5 e 6.
+-- Copie as 4 linhas abaixo.
+-- ============================================================
+
 Status Resumo =
 FORMAT ( [Qtd Fluxos OK], "0" ) & " OK  ·  " &
 FORMAT ( [Qtd Fluxos Divergente], "0" ) & " divergente  ·  " &
 FORMAT ( [Qtd Fluxos Aguardando], "0" ) & " aguardando"
 
+-- ===================== fim da medida 7 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 8 de 8 — KPI Subtítulo Periodo
+-- Texto do título da página.
+-- Copie as 3 linhas abaixo.
+-- ============================================================
+
 KPI Subtítulo Periodo =
 "Conciliação MDR · Pix · Antecipação  —  competência " &
 COALESCE ( SELECTEDVALUE ( dCompetencia[Competencia] ), "todas" )
+
+-- ===================== fim da medida 8 ======================

@@ -273,11 +273,11 @@ export const wizardSteps: WizardStep[] = [
   },
   {
     id: 3,
-    titulo: "Criar só as medidas que faltam",
+    titulo: "Criar só as 8 medidas que faltam",
     noPowerBi:
-      "Troque a Tabela inicial para ffechamentoOficial → Nova medida. Cole um bloco por vez de medidas-layout.dax.",
+      "Troque a Tabela inicial para ffechamentoOficial. Então: Nova medida → cole a medida 1 → Enter → Nova medida → cole a medida 2, e assim até a 8.",
     detalhe:
-      "Previsto por Fluxo, Oficial por Fluxo, Diferença e Status Validação já existem — não recrie. Cole na ordem do arquivo: Status Layout antes de Status Cor, e as contagens antes de Status Resumo.",
+      "Uma medida por clique — duas na mesma caixa dá erro de sintaxe. Previsto por Fluxo, Oficial por Fluxo, Diferença e Status Validação já existem, não recrie.",
     highlight: ["kpi_status"],
     arquivo: "dax",
   },
@@ -358,9 +358,9 @@ export const kitFiles = [
   {
     id: "dax" as const,
     nome: "medidas-layout.dax",
-    titulo: "Medidas que faltam",
+    titulo: "As 8 medidas que faltam",
     descricao:
-      "Status Layout, Status Cor, contagens e textos. O que já existe no modelo fica de fora.",
+      "Numeradas na ordem de colagem. Uma medida por clique em Nova medida — nunca duas na mesma caixa.",
     href: "/power-bi-kit/medidas-layout.dax",
   },
   {
