@@ -55,8 +55,21 @@ Corrija na medida, que vale para todos os visuais de uma vez:
 selecione a medida no painel Dados → aba **Ferramentas de medida** →
 **Formato: Moeda**, **Casas decimais: 2**.
 
-Se um cartão específico continuar abreviando:
-**Formato → Visual → Valor de destaque → Unidades de exibição: Nenhum**.
+O nome e o lugar da opção de abreviação mudam de versão para versão
+(*Unidades de exibição*, *Opções de formato*, às vezes nem aparece).
+O jeito que funciona em qualquer versão é usar código de formato
+personalizado, que ignora abreviação:
+
+```
+R$ #,##0.00
+```
+
+No painel: **Formato → Opções de formato → Formato: Personalizar →
+Formatar código**. Cole o código acima.
+
+Cuidado ao escrever o código: use `,` para milhar e `.` para decimal,
+como está acima. O Power BI converte para o padrão brasileiro na tela
+(`R$ 3.503,82`). Se você escrever `#.##0,00`, o número sai errado.
 
 ## Modelo deste relatório
 
