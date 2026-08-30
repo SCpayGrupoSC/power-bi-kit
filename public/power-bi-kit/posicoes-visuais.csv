@@ -5,12 +5,12 @@ ordem,id,nome,tipo_power_bi,pagina,x,y,largura,altura,medida_ou_campo,observacao
 4,filtro_fluxo,Filtro Fluxo,segmentação,Fechamento,328,72,300,48,dFluxoDax[Fluxo],Lista suspensa. MDR / Pix / Antecipação
 5,filtro_status,Filtro Status,segmentação,Fechamento,640,72,300,48,Status Layout,"Só funciona como coluna. Se não tiver coluna de status, deixe este espaço vazio"
 6,filtro_extra,Espaço livre,—,Fechamento,952,72,312,48,,Reservado. Use para adquirente ou bandeira se existir no modelo
-7,kpi_previsto,KPI Previsto,cartão,Fechamento,16,136,303,100,Previsto por Fluxo,Moeda com 2 casas. Unidades de exibição: Nenhum — não deixe abreviar
-8,kpi_oficial,KPI Oficial,cartão,Fechamento,331,136,303,100,Oficial por Fluxo,Moeda com 2 casas. Unidades de exibição: Nenhum
-9,kpi_diferenca,KPI Diferença,cartão,Fechamento,646,136,303,100,Diferença,Moeda com 2 casas. Unidades de exibição: Nenhum. Condicional: verde se 0 / vermelho se ≠ 0
+7,kpi_previsto,KPI Previsto,cartão,Fechamento,16,136,303,100,Previsto Texto,"Se o cartão abreviar (R$ 3,50 Mil), use Previsto Texto; senão Previsto por Fluxo"
+8,kpi_oficial,KPI Oficial,cartão,Fechamento,331,136,303,100,Oficial Texto,Mostra — enquanto o fechamento oficial não chegar
+9,kpi_diferenca,KPI Diferença,cartão,Fechamento,646,136,303,100,Diferença Texto,Cor da fonte pela medida Status Cor
 10,kpi_status,KPI Status geral,cartão,Fechamento,961,136,303,100,Status Layout,Texto. Cor da fonte = medida Status Cor
 11,tabela_fluxo,Conciliação por fluxo,tabela,Fechamento,16,248,820,148,"dFluxoDax[Fluxo], Previsto por Fluxo, Oficial por Fluxo, Diferença, Diferença %, Status Layout",Visual que você já tem no topo — só reposicionar
 12,resumo_status,Resumo de status,cartão de várias linhas,Fechamento,852,248,412,148,"Qtd Fluxos OK, Qtd Fluxos Divergente, Qtd Fluxos Aguardando",Substitui a rosquinha. Status é medida — não vira legenda de gráfico
 13,tabela_detalhe,Detalhe por fluxo,tabela,Fechamento,16,408,820,296,"dFluxoDax[Fluxo], Volume Transacionado, Custo Previsto, Transações Previstas, Spread Previsto",Visual que você já tem embaixo. Ordenar por Diferença Abs decrescente
-14,cards_spread,Spread por fluxo,cartão de várias linhas,Fechamento,852,408,412,148,"Spread Previsto, Spread Oficial, Diferença",Substitui a fileira solta de cartões Spread Previsto MDR / Pix / Antecipação
+14,cards_spread,Spread por fluxo,cartão de várias linhas,Fechamento,852,408,412,148,"Spread Previsto Texto, Spread Oficial Texto, Diferença Texto",Substitui a fileira solta de cartões Spread Previsto MDR / Pix / Antecipação
 15,regras,Caixa de regras,caixa de texto,Fechamento,852,568,412,136,Status Resumo,Texto fixo das regras + medida Status Resumo

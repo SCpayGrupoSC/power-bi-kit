@@ -1,6 +1,7 @@
 -- ############################################################
 --
---   CONCILIAÇÃO SPREAD PREVISTO — 8 MEDIDAS PARA CRIAR
+--   CONCILIAÇÃO SPREAD PREVISTO
+--   8 medidas obrigatórias + 5 de texto no apêndice
 --
 --   REGRA DE OURO: 1 medida = 1 clique em "Nova medida".
 --   Nunca cole duas medidas na mesma caixa. Se colar, o Power BI
@@ -176,3 +177,110 @@ KPI Subtítulo Periodo =
 COALESCE ( SELECTEDVALUE ( dCompetencia[Competencia] ), "todas" )
 
 -- ===================== fim da medida 8 ======================
+
+
+
+
+-- ############################################################
+--
+--   APÊNDICE — MEDIDAS DE TEXTO (9 a 13)
+--
+--   Use SÓ se o seu Power BI não deixar desligar a abreviação
+--   do cartão (aquele "R$ 3,50 Mil" em vez de "R$ 3.503,82").
+--
+--   Texto não é abreviado. Em troca, texto não ordena por valor
+--   e não aceita formatação condicional por número.
+--
+--   ONDE USAR:  só nos CARTÕES.
+--   ONDE NÃO USAR: nas tabelas — lá você precisa da medida
+--   numérica original para ordenar por Diferença Abs.
+--
+--   Mesma regra de sempre: 1 medida = 1 clique em Nova medida.
+--
+-- ############################################################
+
+
+
+
+-- ============================================================
+-- MEDIDA 9 de 13 — Previsto Texto
+-- Vai no KPI 1, no lugar de Previsto por Fluxo.
+-- ============================================================
+
+Previsto Texto =
+IF (
+    ISBLANK ( [Previsto por Fluxo] ),
+    "—",
+    FORMAT ( [Previsto por Fluxo], "R$ #,##0.00" )
+)
+
+-- ===================== fim da medida 9 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 10 de 13 — Oficial Texto
+-- Vai no KPI 2, no lugar de Oficial por Fluxo.
+-- Enquanto o fechamento não chegar, mostra "—".
+-- ============================================================
+
+Oficial Texto =
+IF (
+    ISBLANK ( [Oficial por Fluxo] ),
+    "—",
+    FORMAT ( [Oficial por Fluxo], "R$ #,##0.00" )
+)
+
+-- ==================== fim da medida 10 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 11 de 13 — Diferença Texto
+-- Vai no KPI 3, no lugar de Diferença.
+-- ============================================================
+
+Diferença Texto =
+IF (
+    ISBLANK ( [Diferença] ),
+    "—",
+    FORMAT ( [Diferença], "R$ #,##0.00" )
+)
+
+-- ==================== fim da medida 11 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 12 de 13 — Spread Previsto Texto
+-- Vai no cartão Spread por fluxo.
+-- ============================================================
+
+Spread Previsto Texto =
+IF (
+    ISBLANK ( [Spread Previsto] ),
+    "—",
+    FORMAT ( [Spread Previsto], "R$ #,##0.00" )
+)
+
+-- ==================== fim da medida 12 ======================
+
+
+
+
+-- ============================================================
+-- MEDIDA 13 de 13 — Spread Oficial Texto
+-- Vai no cartão Spread por fluxo.
+-- ============================================================
+
+Spread Oficial Texto =
+IF (
+    ISBLANK ( [Spread Oficial] ),
+    "—",
+    FORMAT ( [Spread Oficial], "R$ #,##0.00" )
+)
+
+-- ==================== fim da medida 13 ======================

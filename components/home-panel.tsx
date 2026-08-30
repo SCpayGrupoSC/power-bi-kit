@@ -2,6 +2,7 @@ import {
   kitFiles,
   medidasExistentes,
   medidasNovas,
+  medidasTexto,
   modeloReal,
 } from "@/lib/report-spec";
 
@@ -138,6 +139,29 @@ export function HomePanel() {
             </ul>
           </article>
         </div>
+
+        <article className="rounded-xl border border-[#D5DEE3] bg-white p-4 shadow-sm">
+          <h3 className="text-sm font-semibold text-[#8B6914]">
+            Apêndice — só se o cartão insistir em abreviar
+          </h3>
+          <p className="mt-1 text-sm leading-relaxed text-[#3D4F5F]">
+            Algumas versões do Power BI não deixam desligar a abreviação, e o cartão mostra{" "}
+            <span className="font-mono text-xs">R$ 3,50 Mil</span> em vez de{" "}
+            <span className="font-mono text-xs">R$ 3.503,82</span>. Nesse caso use as medidas de
+            texto — texto não é abreviado. Só nos cartões: nas tabelas, mantenha as numéricas para
+            poder ordenar.
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-1.5">
+            {medidasTexto.map((nome) => (
+              <li
+                key={nome}
+                className="rounded-md bg-[#FBF3E0] px-2 py-1 font-mono text-[11px] text-[#7A5B0C]"
+              >
+                {nome}
+              </li>
+            ))}
+          </ul>
+        </article>
       </section>
     </div>
   );

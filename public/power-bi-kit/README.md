@@ -78,17 +78,16 @@ O painel filtra e mostra a opção onde ela estiver. Troque de
 
 Atenção: a abreviação fica na aba **Visual**, não na **Geral**.
 
-**Se a opção não existir na sua versão**, crie uma medida de texto — texto
-não é abreviado:
+**Se a opção não existir na sua versão** — acontece — use as medidas de
+texto do apêndice do `.dax` (medidas 9 a 13). Texto não é abreviado.
 
-```
-Previsto Texto =
-FORMAT ( [Previsto por Fluxo], "R$ #,##0.00" )
-```
+Elas vão **só nos cartões**. Nas tabelas, mantenha as medidas numéricas
+originais: texto não ordena por valor, e você precisa ordenar por
+`Diferença Abs`.
 
-Use essa medida no cartão em vez da original. Serve para cartão e caixa de
-texto; para tabela, prefira resolver pelas opções acima, porque texto não
-ordena por valor.
+Nos cartões de valor com medida de texto, a formatação condicional por
+número deixa de funcionar. Use a medida `Status Cor` na cor da fonte —
+ela já distingue OK, Divergente e Aguardando.
 
 ## Modelo deste relatório
 

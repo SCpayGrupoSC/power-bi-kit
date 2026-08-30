@@ -92,7 +92,7 @@ export const visuaisPropostos: VisualRect[] = [
     y: 136,
     w: 303,
     h: 100,
-    medida: "Previsto por Fluxo",
+    medida: "Previsto Texto (ou Previsto por Fluxo)",
     grupo: "kpi",
   },
   {
@@ -103,7 +103,7 @@ export const visuaisPropostos: VisualRect[] = [
     y: 136,
     w: 303,
     h: 100,
-    medida: "Oficial por Fluxo",
+    medida: "Oficial Texto (ou Oficial por Fluxo)",
     grupo: "kpi",
   },
   {
@@ -114,7 +114,7 @@ export const visuaisPropostos: VisualRect[] = [
     y: 136,
     w: 303,
     h: 100,
-    medida: "Diferença",
+    medida: "Diferença Texto (ou Diferença)",
     grupo: "kpi",
   },
   {
@@ -169,7 +169,7 @@ export const visuaisPropostos: VisualRect[] = [
     y: 408,
     w: 412,
     h: 148,
-    medida: "Spread Previsto, Spread Oficial, Diferença",
+    medida: "Spread Previsto Texto, Spread Oficial Texto, Diferença Texto",
     grupo: "fluxo",
   },
   {
@@ -426,6 +426,11 @@ export const medidasExistentes = [
 
 export const ondeUsarMedidas = [
   {
+    medida: "Previsto Texto · Oficial Texto · Diferença Texto",
+    destino: "Cartões de KPI",
+    como: "Use no lugar da medida numérica quando o cartão insistir em abreviar.",
+  },
+  {
     medida: "Status Layout",
     destino: "KPI Status geral + coluna da tabela de conciliação",
     como: "Arraste para o campo de valor do cartão.",
@@ -476,4 +481,12 @@ export const medidasNovas = [
   "Qtd Fluxos Aguardando",
   "Status Resumo",
   "KPI Subtítulo Periodo",
+];
+
+export const medidasTexto = [
+  "Previsto Texto",
+  "Oficial Texto",
+  "Diferença Texto",
+  "Spread Previsto Texto",
+  "Spread Oficial Texto",
 ];
