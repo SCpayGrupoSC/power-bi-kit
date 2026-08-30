@@ -306,7 +306,7 @@ export const wizardSteps: WizardStep[] = [
     noPowerBi:
       "Quatro cartões na linha Y 136, altura 100. Folga de 12 px abaixo do título — eles não se tocam.",
     detalhe:
-      "Previsto por Fluxo · Oficial por Fluxo · Diferença · Status Layout. No cartão de status, use formatação condicional de cor da fonte com a medida Status Cor.",
+      "Previsto por Fluxo · Oficial por Fluxo · Diferença · Status Layout. No cartão de status, cor da fonte pela medida Status Cor. Nos de valor, Unidades de exibição: Nenhum — abreviar para \"3,50 Mil\" esconde os centavos que a tolerância confere.",
     highlight: ["kpi_previsto", "kpi_oficial", "kpi_diferenca", "kpi_status"],
     arquivo: "csv",
   },

@@ -47,6 +47,17 @@ lê-la como coluna. Cole na ordem numerada do arquivo.
 Você colou mais de uma medida na mesma caixa. Cada medida precisa do próprio
 clique em **Nova medida**. Apague a caixa e cole só uma faixa numerada.
 
+**O cartão mostra "3,50 Mil" em vez de "R$ 3.503,82"**
+O cartão abrevia por conta própria. Numa conciliação com tolerância de
+R$ 0,01, abreviar esconde justamente o que você quer conferir.
+
+Corrija na medida, que vale para todos os visuais de uma vez:
+selecione a medida no painel Dados → aba **Ferramentas de medida** →
+**Formato: Moeda**, **Casas decimais: 2**.
+
+Se um cartão específico continuar abreviando:
+**Formato → Visual → Valor de destaque → Unidades de exibição: Nenhum**.
+
 ## Modelo deste relatório
 
 | Tabela | Papel | Campos usados |
