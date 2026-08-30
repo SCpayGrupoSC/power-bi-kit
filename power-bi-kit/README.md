@@ -55,21 +55,40 @@ Corrija na medida, que vale para todos os visuais de uma vez:
 selecione a medida no painel Dados → aba **Ferramentas de medida** →
 **Formato: Moeda**, **Casas decimais: 2**.
 
-O nome e o lugar da opção de abreviação mudam de versão para versão
-(*Unidades de exibição*, *Opções de formato*, às vezes nem aparece).
-O jeito que funciona em qualquer versão é usar código de formato
-personalizado, que ignora abreviação:
+O código de formato e a abreviação são **duas opções diferentes**. Com
+`R$ #,##0.00` você consegue `R$ 3,50 Mil` — o símbolo entra, a abreviação
+fica. Precisa desligar as duas coisas.
+
+**1. Código de formato** — **Formato → Geral → Opções de formato →
+Formato: Personalizar → Formatar código**:
 
 ```
 R$ #,##0.00
 ```
 
-No painel: **Formato → Opções de formato → Formato: Personalizar →
-Formatar código**. Cole o código acima.
+Use `,` para milhar e `.` para decimal, como está acima. O Power BI
+converte para o padrão brasileiro na tela (`R$ 3.503,82`). Se você
+escrever `#.##0,00`, o número sai errado.
 
-Cuidado ao escrever o código: use `,` para milhar e `.` para decimal,
-como está acima. O Power BI converte para o padrão brasileiro na tela
-(`R$ 3.503,82`). Se você escrever `#.##0,00`, o número sai errado.
+**2. Abreviação** — o nome e o lugar mudam de versão para versão
+(*Unidades de exibição*, *Unidades*, *Display units*). Em vez de procurar,
+use a caixa **Pesquisar** no topo do painel Formato e digite `unidades`.
+O painel filtra e mostra a opção onde ela estiver. Troque de
+**Automático** para **Nenhum**.
+
+Atenção: a abreviação fica na aba **Visual**, não na **Geral**.
+
+**Se a opção não existir na sua versão**, crie uma medida de texto — texto
+não é abreviado:
+
+```
+Previsto Texto =
+FORMAT ( [Previsto por Fluxo], "R$ #,##0.00" )
+```
+
+Use essa medida no cartão em vez da original. Serve para cartão e caixa de
+texto; para tabela, prefira resolver pelas opções acima, porque texto não
+ordena por valor.
 
 ## Modelo deste relatório
 
