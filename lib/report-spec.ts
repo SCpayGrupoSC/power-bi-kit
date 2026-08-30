@@ -250,93 +250,110 @@ export type WizardStep = {
   detalhe: string;
   highlight: VisualId[];
   arquivo?: "tema" | "dax" | "csv";
+  feito: boolean;
+  medidas?: string[];
 };
 
 export const wizardSteps: WizardStep[] = [
   {
     id: 1,
-    titulo: "Travar o tamanho da página",
+    titulo: "Importar o tema SCpay",
     noPowerBi:
-      "Clique num espaço vazio → Exibir → Tamanho da página → Tipo: Personalizado → 1280 de largura e 720 de altura.",
+      "Exibir → Temas → Procurar temas → escolha tema-scpay.json. A página já está em 1280 × 720.",
     detalhe:
-      "Sem esse tamanho, os números de posição não fecham. Fundo da página: #F3F6F7.",
+      "O tema troca a paleta antiga pela da marca: fundo #F7F9FB, cartões brancos com canto de 16 px e cabeçalho de tabela em #2B2D3B com texto branco. Ele não mexe na cor do status — essa está gravada na medida Status Cor, no passo 8.",
     highlight: [],
+    arquivo: "tema",
+    feito: false,
   },
   {
     id: 2,
-    titulo: "Importar o tema visual",
-    noPowerBi: "Exibir → Temas → Procurar temas → escolha tema-conciliacao-spread.json.",
-    detalhe:
-      "O tema é o arquivo .json. Ele não entra na caixa de medida — se colar lá, o Power BI acusa erro de caracteres especiais.",
-    highlight: [],
-    arquivo: "tema",
+    titulo: "8 medidas obrigatórias — já feitas",
+    noPowerBi:
+      "Diferença Abs, Status Layout, Status Cor, as três Qtd Fluxos, Status Resumo e KPI Subtítulo Periodo já existem em ffechamentoOficial.",
+    detalhe: "Não recrie. Nome repetido o Power BI recusa.",
+    highlight: ["kpi_status"],
+    arquivo: "dax",
+    feito: true,
   },
   {
     id: 3,
-    titulo: "Criar só as 8 medidas que faltam",
-    noPowerBi:
-      "Troque a Tabela inicial para ffechamentoOficial. Então: Nova medida → cole a medida 1 → Enter → Nova medida → cole a medida 2, e assim até a 8.",
+    titulo: "Cartões Previsto e Oficial — já no lugar",
+    noPowerBi: "Previsto em X 16, Y 136. Oficial em X 331, Y 136. Os dois com 303 × 100.",
     detalhe:
-      "Uma medida por clique — duas na mesma caixa dá erro de sintaxe. Previsto por Fluxo, Oficial por Fluxo, Diferença e Status Validação já existem, não recrie.",
-    highlight: ["kpi_status"],
-    arquivo: "dax",
+      "O Oficial ainda mostra — porque ffechamentoOficial está sem dados. Isso é esperado até clicar em Atualizar agora.",
+    highlight: ["kpi_previsto", "kpi_oficial"],
+    feito: true,
   },
   {
     id: 4,
-    titulo: "Colocar o título em faixa inteira",
-    noPowerBi: "Inserir → Caixa de texto. Formato → Posição: X 16, Y 12, Largura 1248, Altura 48.",
+    titulo: "Medidas de texto 9 a 13 — já feitas",
+    noPowerBi:
+      "Previsto Texto refeita com ISBLANK, mais Oficial Texto, Diferença Texto, Spread Previsto Texto e Spread Oficial Texto.",
     detalhe:
-      "O título ocupa a largura toda. Nenhum visual pode ficar em cima desta faixa — era o que quebrava o layout antigo.",
-    highlight: ["titulo"],
-    arquivo: "csv",
+      "FORMAT de valor vazio devolve string vazia, não —. Texto só nos cartões; nas tabelas continue com as numéricas.",
+    highlight: ["kpi_previsto", "kpi_oficial", "kpi_diferenca", "cards_spread"],
+    arquivo: "dax",
+    feito: true,
+    medidas: [
+      "previsto-texto",
+      "oficial-texto",
+      "diferenca-texto",
+      "spread-previsto-texto",
+      "spread-oficial-texto",
+    ],
   },
   {
     id: 5,
-    titulo: "Montar a barra de filtros no topo",
-    noPowerBi:
-      "Competência e Fluxo em linha, Y 72, altura 48. O filtro de Competência você já tem — é só reposicionar.",
+    titulo: "Cartões Diferença e Status geral — no lugar",
+    noPowerBi: "Diferença em 646 · 136 · 303 · 100. Status geral em 961 · 136 · 303 · 100.",
     detalhe:
-      "Os filtros saem da coluna da direita e viram uma barra logo abaixo do título. Mude cada um para lista suspensa.",
-    highlight: ["filtro_competencia", "filtro_fluxo", "filtro_status", "filtro_extra"],
+      "Os quatro KPIs fecham a linha Y 136 sem encostar no título, que acaba em Y 60.",
+    highlight: ["kpi_diferenca", "kpi_status"],
     arquivo: "csv",
+    feito: true,
   },
   {
     id: 6,
-    titulo: "Posicionar os quatro KPIs",
+    titulo: "Título e barra de filtros — já feitos",
     noPowerBi:
-      "Quatro cartões na linha Y 136, altura 100. Folga de 12 px abaixo do título — eles não se tocam.",
+      "Título em 16 · 12 · 1248 · 48. Competência em 16 · 72 e Fluxo em 328 · 72, os dois 300 × 48, estilo Suspenso.",
     detalhe:
-      "Previsto por Fluxo · Oficial por Fluxo · Diferença · Status Layout. No cartão de status, cor da fonte pela medida Status Cor. Nos de valor, Unidades de exibição: Nenhum — abreviar para \"3,50 Mil\" esconde os centavos que a tolerância confere.",
-    highlight: ["kpi_previsto", "kpi_oficial", "kpi_diferenca", "kpi_status"],
+      "O valor dinâmico do título entra pelo botão + Valor da caixa de texto: você digita KPI Subtítulo Periodo no campo de pergunta, não existe lista de medidas ali.",
+    highlight: ["titulo", "filtro_competencia", "filtro_fluxo"],
     arquivo: "csv",
+    feito: true,
   },
   {
     id: 7,
-    titulo: "Conciliação por fluxo e resumo de status",
+    titulo: "As duas tabelas — já posicionadas",
     noPowerBi:
-      "A tabela de conciliação que já está no topo do relatório vai para X 16, Y 248. Ao lado dela, o resumo de status em X 852.",
+      "Conciliação em 16 · 248 · 820 · 148, com Status Layout e Diferença Abs. Detalhe em 16 · 408 · 820 · 296.",
     detalhe:
-      "A tabela leva Fluxo, Previsto por Fluxo, Oficial por Fluxo, Diferença, Diferença % e Status Layout. O resumo é um cartão de várias linhas com as três contagens.",
-    highlight: ["tabela_fluxo", "resumo_status"],
+      "Se a conciliação criar barra de rolagem, desligue Totais e reduza o preenchimento de linha — os KPIs de cima já mostram o total.",
+    highlight: ["tabela_fluxo", "tabela_detalhe"],
     arquivo: "csv",
+    feito: true,
   },
   {
     id: 8,
-    titulo: "Detalhe, spread e regras",
+    titulo: "Status Cor nas cores SCpay e coluna da direita",
     noPowerBi:
-      "Tabela de detalhe à esquerda (X 16, Y 408). Cartões de spread e caixa de regras empilhados à direita.",
+      "Abra a medida Status Cor e substitua a fórmula pela de baixo. Depois, nos cartões Status geral e Diferença: Formatar visual → Visual → Valores → Cor → fx → Estilo do formato: Valor do campo → Status Cor.",
     detalhe:
-      "O detalhe leva Volume Transacionado, Custo Previsto, Transações Previstas e Spread Previsto. Ordene por Diferença Abs, maior primeiro.",
-    highlight: ["tabela_detalhe", "cards_spread", "regras"],
+      "Teal no OK, laranja no Aguardando, vermelho do logo na divergência. O fx só aparece com a medida já no balde Valores, e a janela certa se chama Cor da fonte — não Mostrar em branco como. Alinhe também a coluna da direita: a partir de X 852, Qtd Fluxos em Y 248, Spread em Y 408 e regras em 852 · 568 · 412 · 136.",
+    highlight: ["kpi_status", "kpi_diferenca", "resumo_status", "cards_spread", "regras"],
     arquivo: "csv",
+    feito: false,
+    medidas: ["status-cor"],
   },
   {
     id: 9,
     titulo: "Conferir e gravar",
     noPowerBi:
-      "Clique num espaço vazio da página. Confira se o título está livre, os filtros estão no topo e o status pinta certo.",
+      "Clique em Atualizar agora na faixa amarela. Depois clique num espaço vazio e confira a página inteira.",
     detalhe:
-      "Se os cartões estiverem vazios, clique em Atualizar agora — falta dado no lado oficial, e o status deve mostrar Aguardando. Depois salve o .pbix.",
+      "Sem atualizar, Oficial e Diferença ficam em — e as contagens em 0, com Status Layout em Aguardando. Depois salve o .pbix.",
     highlight: [
       "titulo",
       "filtro_competencia",
@@ -344,23 +361,30 @@ export const wizardSteps: WizardStep[] = [
       "tabela_fluxo",
       "tabela_detalhe",
     ],
+    feito: false,
   },
 ];
+
+export const primeiroPassoPendente =
+  wizardSteps.findIndex((step) => !step.feito) === -1
+    ? wizardSteps.length - 1
+    : wizardSteps.findIndex((step) => !step.feito);
 
 export const kitFiles = [
   {
     id: "tema" as const,
-    nome: "tema-conciliacao-spread.json",
-    titulo: "Tema visual",
-    descricao: "Cores, fontes e borda. Importar em Exibir → Temas → Procurar temas.",
-    href: "/power-bi-kit/tema-conciliacao-spread.json",
+    nome: "tema-scpay.json",
+    titulo: "Tema visual SCpay",
+    descricao:
+      "Navy, laranja e teal da marca, cartões brancos de canto arredondado e cabeçalho de tabela em slate. Importar em Exibir → Temas → Procurar temas.",
+    href: "/power-bi-kit/tema-scpay.json",
   },
   {
     id: "dax" as const,
     nome: "medidas-layout.dax",
     titulo: "As 8 medidas que faltam",
     descricao:
-      "Numeradas na ordem de colagem. Uma medida por clique em Nova medida — nunca duas na mesma caixa.",
+      "As 8 obrigatórias já estão no modelo. O que falta é o apêndice 9–13, uma medida por clique.",
     href: "/power-bi-kit/medidas-layout.dax",
   },
   {

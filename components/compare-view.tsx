@@ -11,7 +11,7 @@ export function CompareView() {
   return (
     <div className="grid gap-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <p className="max-w-2xl text-sm leading-relaxed text-[#3D4F5F]">
+        <p className="max-w-2xl text-sm leading-relaxed text-muted-ink">
           À esquerda, o que estava no Power BI depois da migração do HTML. À direita, o mesmo
           cálculo, com o título livre, os filtros no topo e os produtos lado a lado.
         </p>
@@ -27,8 +27,8 @@ export function CompareView() {
       <div className="grid gap-4 lg:grid-cols-2">
         <figure className="grid gap-2">
           <figcaption className="flex items-center justify-between text-sm">
-            <span className="font-semibold text-[#C23B2E]">Antes — empilhado</span>
-            <span className="text-xs text-[#7A8B99]">cálculos ok, montagem não</span>
+            <span className="font-semibold text-brand-red">Antes — empilhado</span>
+            <span className="text-xs text-muted-ink-light">cálculos ok, montagem não</span>
           </figcaption>
           <ReportCanvas
             visuais={visuaisAntes}
@@ -38,8 +38,8 @@ export function CompareView() {
         </figure>
         <figure className="grid gap-2">
           <figcaption className="flex items-center justify-between text-sm">
-            <span className="font-semibold text-[#1F8A70]">Depois — proposto</span>
-            <span className="text-xs text-[#7A8B99]">1280 × 720</span>
+            <span className="font-semibold text-brand-teal">Depois — proposto</span>
+            <span className="text-xs text-muted-ink-light">1280 × 720</span>
           </figcaption>
           <ReportCanvas
             visuais={visuaisPropostos}
@@ -53,10 +53,10 @@ export function CompareView() {
         {problemasAntes.map((item) => (
           <article
             key={item.titulo}
-            className="rounded-xl border border-[#D5DEE3] bg-white p-4 shadow-sm"
+            className="rounded-card border border-hairline bg-surface p-4 shadow-card"
           >
-            <h3 className="text-sm font-semibold text-[#0B3D4A]">{item.titulo}</h3>
-            <p className="mt-1 text-sm leading-relaxed text-[#3D4F5F]">{item.texto}</p>
+            <h3 className="text-sm font-semibold text-brand-navy">{item.titulo}</h3>
+            <p className="mt-1 text-sm leading-relaxed text-muted-ink">{item.texto}</p>
           </article>
         ))}
       </div>

@@ -12,8 +12,8 @@ Não precisa saber programar. A ordem certa está no assistente (aba **Passo a p
 
 | Arquivo | Para que serve | Onde entra no Power BI |
 |---|---|---|
-| `tema-conciliacao-spread.json` | Cores, fontes e borda dos visuais | **Exibir → Temas → Procurar temas** |
-| `medidas-layout.dax` | As 8 medidas que **faltam** no modelo (status, cor, contagens) | **Modelagem → Nova medida** — uma medida por clique |
+| `tema-scpay.json` | Cores, fontes e borda dos visuais, na paleta SCpay | **Exibir → Temas → Procurar temas** |
+| `medidas-layout.dax` | As 8 obrigatórias já estão no modelo. O apêndice 9–13 ainda falta | **Modelagem → Nova medida** — uma medida por clique |
 | `posicoes-visuais.csv` | X, Y, largura e altura de cada peça | **Formato → Geral → Propriedades → Posição** |
 
 ## A regra que evita 90% dos erros
@@ -24,6 +24,23 @@ O arquivo tem 8 medidas, numeradas de 1 a 8, cada uma entre linhas `=====`.
 Copie o conteúdo de **uma** faixa, cole, Enter, e só então clique em
 **Nova medida** outra vez para a seguinte. Siga a ordem 1 → 8: as de baixo
 usam as de cima.
+
+## A paleta
+
+| Onde | Cor |
+|---|---|
+| Fundo da página | `#F7F9FB` |
+| Cartões e tabelas | branco, borda `#E2E3E8`, canto 16 px |
+| Cabeçalho de tabela | `#2B2D3B` com texto branco |
+| Números e títulos | `#1C2445` |
+| Rótulos | `#61636E` |
+| **OK** | `#22C5AD` |
+| **Aguardando** | `#F07F3C` |
+| **Divergente** | `#B82724` |
+| **Sem movimento** | `#8D91A2` |
+
+As quatro últimas ficam na medida `Status Cor`, não no tema. Trocar de tema
+não muda a cor do status.
 
 ## Erros comuns
 

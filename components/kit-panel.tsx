@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
 import { DownloadLink } from "@/components/download-link";
+import { MeasureCopy } from "@/components/measure-copy";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { daxBlocks, medidasParaRetomar } from "@/lib/dax-blocks";
 import { kitFiles, ondeUsarMedidas } from "@/lib/report-spec";
-import { copyText } from "@/lib/copy";
+import { useCopy } from "@/lib/use-copy";
 
 const labels: Record<string, string> = {
   tema: "Tema",
@@ -17,7 +19,7 @@ const labels: Record<string, string> = {
 export function KitPanel() {
   const [contents, setContents] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState<string | null>(null);
+  const { status, id: copiedId, copy } = useCopy();
 
   useEffect(() => {
     let cancelled = false;
@@ -48,12 +50,10 @@ export function KitPanel() {
     };
   }, []);
 
-  async function copiar(id: string) {
+  function copiar(id: string) {
     const text = contents[id];
     if (!text) return;
-    const ok = await copyText(text);
-    setCopied(ok ? id : null);
-    window.setTimeout(() => setCopied(null), 1800);
+    void copy(text, id);
   }
 
   return (
@@ -62,13 +62,13 @@ export function KitPanel() {
         {kitFiles.map((file) => (
           <article
             key={file.id}
-            className="flex flex-col rounded-xl border border-[#D5DEE3] bg-white p-4 shadow-sm"
+            className="flex flex-col rounded-card border border-hairline bg-surface p-4 shadow-card"
           >
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7A8B99]">
-              {file.titulo}
+            <p className="field-label">{file.titulo}</p>
+            <h3 className="mt-1 font-mono text-sm text-brand-navy">{file.nome}</h3>
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-ink">
+              {file.descricao}
             </p>
-            <h3 className="mt-1 font-mono text-sm text-[#0B3D4A]">{file.nome}</h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-[#3D4F5F]">{file.descricao}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <DownloadLink href={file.href}>
                 <Download />
@@ -76,11 +76,17 @@ export function KitPanel() {
               </DownloadLink>
               <Button
                 type="button"
-                variant="outline"
+                variant={
+                  status === "copiado" && copiedId === file.id ? "secondary" : "outline"
+                }
                 onClick={() => copiar(file.id)}
                 disabled={!contents[file.id]}
               >
-                {copied === file.id ? "Copiado" : "Copiar conteúdo"}
+                {copiedId === file.id && status === "copiado"
+                  ? "Copiado"
+                  : copiedId === file.id && status === "falhou"
+                    ? "Use a aba abaixo"
+                    : "Copiar conteúdo"}
               </Button>
             </div>
           </article>
@@ -88,28 +94,60 @@ export function KitPanel() {
       </div>
 
       {error ? (
-        <p className="rounded-lg border border-[#C23B2E]/30 bg-[#FCECEA] px-3 py-2 text-sm text-[#C23B2E]">
+        <p className="rounded-lg border border-brand-red/30 bg-brand-red/8 px-3 py-2 text-sm text-brand-red">
           {error} — use os arquivos da pasta <span className="font-mono">power-bi-kit/</span> no
           repositório.
         </p>
       ) : null}
 
       {!error && Object.keys(contents).length === 0 ? (
-        <p className="rounded-lg border border-[#D5DEE3] bg-white px-3 py-6 text-center text-sm text-[#7A8B99]">
+        <p className="rounded-card border border-hairline bg-surface px-3 py-6 text-center text-sm text-muted-ink-light">
           Carregando os três arquivos para colar…
         </p>
       ) : null}
 
       <section className="grid gap-3">
         <div>
-          <h2 className="font-heading text-xl text-[#0B3D4A]">Onde cada medida nova entra</h2>
-          <p className="mt-1 text-sm text-[#3D4F5F]">
+          <h2 className="font-heading text-xl text-brand-navy">Cole agora</h2>
+          <p className="mt-1 text-sm text-muted-ink">
+            Tabela inicial em <span className="font-mono text-xs">ffechamentoOficial</span>. Uma
+            medida por clique em Nova medida. O <span className="font-mono text-xs">Status Cor</span>{" "}
+            já existe: abra a medida e substitua a fórmula pelas cores SCpay.
+          </p>
+        </div>
+        <div className="grid gap-3">
+          {medidasParaRetomar.map((block) => (
+            <MeasureCopy key={block.id} block={block} />
+          ))}
+        </div>
+      </section>
+
+      <section className="grid gap-3">
+        <div>
+          <h2 className="font-heading text-xl text-brand-navy">Já no modelo</h2>
+          <p className="mt-1 text-sm text-muted-ink">
+            Só abra se precisar conferir. Não recrie.
+          </p>
+        </div>
+        <div className="grid gap-3">
+          {daxBlocks
+            .filter((block) => block.status === "feita")
+            .map((block) => (
+              <MeasureCopy key={block.id} block={block} />
+            ))}
+        </div>
+      </section>
+
+      <section className="grid gap-3">
+        <div>
+          <h2 className="font-heading text-xl text-brand-navy">Onde cada medida nova entra</h2>
+          <p className="mt-1 text-sm text-muted-ink">
             Criar a medida é metade do trabalho. Esta é a outra metade: em qual visual ela aparece.
           </p>
         </div>
-        <div className="overflow-x-auto rounded-xl border border-[#D5DEE3] bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-card border border-hairline bg-surface shadow-card">
           <table className="w-full min-w-[640px] text-left text-sm">
-            <thead className="bg-[#EAF0F2] text-xs uppercase tracking-wide text-[#5C6B78]">
+            <thead className="bg-brand-slate text-xs uppercase tracking-wide text-white">
               <tr>
                 <th className="px-4 py-2 font-semibold">Medida</th>
                 <th className="px-4 py-2 font-semibold">Vai para</th>
@@ -118,21 +156,21 @@ export function KitPanel() {
             </thead>
             <tbody>
               {ondeUsarMedidas.map((item) => (
-                <tr key={item.medida} className="border-t border-[#E6EBEE]">
-                  <td className="px-4 py-2 font-mono text-xs whitespace-nowrap text-[#0B3D4A]">
+                <tr key={item.medida} className="border-t border-hairline">
+                  <td className="px-4 py-2 font-mono text-xs whitespace-nowrap text-brand-navy">
                     {item.medida}
                   </td>
-                  <td className="px-4 py-2 text-[#14202B]">{item.destino}</td>
-                  <td className="px-4 py-2 text-[#3D4F5F]">{item.como}</td>
+                  <td className="px-4 py-2 text-brand-navy">{item.destino}</td>
+                  <td className="px-4 py-2 text-muted-ink">{item.como}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="rounded-lg border border-[#D4A017]/40 bg-[#FBF3E0] px-3 py-2 text-sm text-[#7A5B0C]">
-          <span className="font-semibold">Status Cor</span> não vai para visual nenhum. Se você
-          arrastar para um cartão, aparece o texto <span className="font-mono">#1F8A70</span> — é
-          código de cor, não informação.
+        <p className="rounded-lg border border-hairline bg-surface px-3 py-2 text-sm text-muted-ink">
+          <span className="font-semibold text-brand-navy">Status Cor</span> não vai para visual
+          nenhum. Se você arrastar para um cartão, aparece o texto{" "}
+          <span className="font-mono">#22C5AD</span> — é código de cor, não informação.
         </p>
       </section>
 
@@ -147,7 +185,7 @@ export function KitPanel() {
           </TabsList>
           {kitFiles.map((file) => (
             <TabsContent key={file.id} value={file.id}>
-              <pre className="max-h-[420px] overflow-auto rounded-xl border border-[#D5DEE3] bg-[#14202B] p-4 text-[11px] leading-relaxed text-[#E8F0F2]">
+              <pre className="max-h-[420px] overflow-auto rounded-card border border-hairline bg-brand-navy p-4 text-[11px] leading-relaxed text-white">
                 <code>{contents[file.id]}</code>
               </pre>
             </TabsContent>

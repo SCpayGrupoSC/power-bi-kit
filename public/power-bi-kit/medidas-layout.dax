@@ -80,8 +80,13 @@ RETURN
 
 -- ============================================================
 -- MEDIDA 3 de 8 — Status Cor
--- Use em Formatação condicional → Cor da fonte →
--- Formato do campo → esta medida.
+-- Cores da marca SCpay: teal no OK, laranja no Aguardando,
+-- vermelho do logo na divergência.
+--
+-- Caminho no cartão: Formatar visual → Visual → Valores →
+-- Cor → fx → Estilo do formato: Valor do campo → esta medida.
+-- O fx só aparece depois que a medida está no balde Valores.
+--
 -- Precisa da medida 2.
 -- Copie as 8 linhas abaixo.
 -- ============================================================
@@ -89,10 +94,10 @@ RETURN
 Status Cor =
 SWITCH (
     [Status Layout],
-    "OK", "#1F8A70",
-    "Divergente", "#C23B2E",
-    "Aguardando", "#D4A017",
-    "#7A8B99"
+    "OK", "#22C5AD",
+    "Divergente", "#B82724",
+    "Aguardando", "#F07F3C",
+    "#8D91A2"
 )
 
 -- ===================== fim da medida 3 ======================
