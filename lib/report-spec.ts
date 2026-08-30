@@ -277,7 +277,7 @@ export const wizardSteps: WizardStep[] = [
     noPowerBi:
       "Troque a Tabela inicial para ffechamentoOficial → Nova medida. Cole um bloco por vez de medidas-layout.dax.",
     detalhe:
-      "Previsto por Fluxo, Oficial por Fluxo, Diferença e Status Validação já existem — não recrie. O arquivo só adiciona Status Layout, Status Cor, Diferença Abs, as contagens e os textos.",
+      "Previsto por Fluxo, Oficial por Fluxo, Diferença e Status Validação já existem — não recrie. Cole na ordem do arquivo: Status Layout antes de Status Cor, e as contagens antes de Status Resumo.",
     highlight: ["kpi_status"],
     arquivo: "dax",
   },
@@ -425,7 +425,6 @@ export const medidasExistentes = [
 ];
 
 export const medidasNovas = [
-  "Tolerância R$",
   "Diferença Abs",
   "Status Layout",
   "Status Cor",

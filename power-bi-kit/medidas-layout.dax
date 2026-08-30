@@ -3,8 +3,11 @@
 -- Power BI Desktop → Modelagem → Nova medida
 -- Cole UM bloco por vez (do nome até o último parêntese).
 --
--- IMPORTANTE: antes de colar, troque a "Tabela inicial" no topo
--- da barra de fórmula para ffechamentoOficial.
+-- ANTES DE COLAR: no topo da barra de fórmula existe
+-- "Tabela inicial". Troque para ffechamentoOficial.
+--
+-- Cada bloco abaixo funciona sozinho, na ordem em que aparece.
+-- Nenhum depende de medida que você ainda não criou.
 -- ============================================================
 --
 -- MODELO REAL DESTE RELATÓRIO
@@ -38,31 +41,29 @@
 
 
 -- ------------------------------------------------------------
--- 1) Tolerância. Mude só este número se a regra do time for outra.
--- ------------------------------------------------------------
-Tolerância R$ = 0.01
-
-
--- ------------------------------------------------------------
--- 2) Diferença absoluta — serve para ordenar a tabela de detalhe
---    da maior divergência para a menor.
+-- 1) Diferença absoluta
+--    Serve para ordenar a tabela de detalhe da maior divergência
+--    para a menor.
 -- ------------------------------------------------------------
 Diferença Abs =
 ABS ( [Diferença] )
 
 
 -- ------------------------------------------------------------
--- 3) Status com o estado "Aguardando"
+-- 2) Status com o estado "Aguardando"   ← COLE ESTE PRIMEIRO
 --
 --    Hoje o seu Status Validação devolve "—" quando o oficial
 --    ainda não chegou. Isso confunde: parece divergência quando
 --    é só dado que falta.
 --
---    Cole como medida NOVA chamada Status Layout, confira, e só
---    depois (se quiser) troque a fórmula do seu Status Validação
---    por esta.
+--    A tolerância está escrita direto na linha "VAR Tol = 0.01".
+--    Se a regra do time mudar, é esse número que você troca.
+--
+--    Cole como medida NOVA (Status Layout), confira, e só depois
+--    (se quiser) troque a fórmula do seu Status Validação.
 -- ------------------------------------------------------------
 Status Layout =
+VAR Tol = 0.01
 VAR Previsto = [Previsto por Fluxo]
 VAR Oficial = [Oficial por Fluxo]
 VAR Delta = ABS ( [Diferença] )
@@ -72,14 +73,16 @@ RETURN
         ISBLANK ( Previsto ) && ISBLANK ( Oficial ), "Sem movimento",
         ISBLANK ( Oficial ), "Aguardando",
         ISBLANK ( Previsto ), "Aguardando",
-        Delta <= [Tolerância R$], "OK",
+        Delta <= Tol, "OK",
         "Divergente"
     )
 
 
 -- ------------------------------------------------------------
--- 4) Cor do status — use em Formatação condicional → Cor da fonte
---    (escolha "Formato do campo" → esta medida)
+-- 3) Cor do status
+--    Use em Formatação condicional → Cor da fonte →
+--    Formato do campo → esta medida.
+--    Depende do Status Layout (bloco 2).
 -- ------------------------------------------------------------
 Status Cor =
 SWITCH (
@@ -92,8 +95,9 @@ SWITCH (
 
 
 -- ------------------------------------------------------------
--- 5) Contagem de fluxos por status
+-- 4) Contagem de fluxos por status
 --    Conta MDR / Pix / Antecipação, não linhas da tabela fato.
+--    Depende do Status Layout (bloco 2).
 -- ------------------------------------------------------------
 Qtd Fluxos OK =
 COUNTROWS (
@@ -112,7 +116,8 @@ COUNTROWS (
 
 
 -- ------------------------------------------------------------
--- 6) Textos prontos para os cartões e a caixa de regras
+-- 5) Textos prontos para os cartões e a caixa de regras
+--    Status Resumo depende do bloco 4.
 -- ------------------------------------------------------------
 Status Resumo =
 FORMAT ( [Qtd Fluxos OK], "0" ) & " OK  ·  " &

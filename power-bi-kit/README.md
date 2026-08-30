@@ -30,6 +30,11 @@ antes de colar. Se já criou no lugar errado, clique com o botão direito na med
 Falta dado no lado oficial. Clique em **Atualizar agora** na faixa amarela.
 Com a medida `Status Layout`, esse caso passa a mostrar **Aguardando** em vez de "—".
 
+**"O valor de X não pode ser determinado. A coluna não existe..."**
+A fórmula cita uma medida que ainda não foi criada, então o Power BI tenta
+lê-la como coluna. Cole os blocos na ordem do arquivo: `Status Layout` antes
+de `Status Cor`, e `Qtd Fluxos ...` antes de `Status Resumo`.
+
 ## Modelo deste relatório
 
 | Tabela | Papel | Campos usados |
@@ -47,9 +52,12 @@ Com a medida `Status Layout`, esse caso passa a mostrar **Aguardando** em vez de
 
 ### O que o `.dax` adiciona
 
-`Tolerância R$` · `Diferença Abs` · `Status Layout` · `Status Cor` ·
+`Diferença Abs` · `Status Layout` · `Status Cor` ·
 `Qtd Fluxos OK` · `Qtd Fluxos Divergente` · `Qtd Fluxos Aguardando` ·
 `Status Resumo` · `KPI Subtítulo Periodo`
+
+A tolerância de R$ 0,01 está escrita dentro do `Status Layout`
+(linha `VAR Tol = 0.01`). Não existe medida separada de tolerância.
 
 ## O que este layout corrige
 
