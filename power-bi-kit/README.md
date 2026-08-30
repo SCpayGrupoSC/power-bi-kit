@@ -44,6 +44,13 @@ não muda a cor do status.
 
 ## Erros comuns
 
+**"Erro ao importar o arquivo tema"**
+O Power BI recusa qualquer chave desconhecida no topo do `.json` — a mensagem
+fala de sintaxe, cor inválida e propriedade de nível superior, sem dizer qual.
+A versão que falhou tinha `secondaryForeground`. O arquivo deste kit já usa
+`firstLevelElements` / `secondLevelElements` e passa no schema oficial 2.119–2.157.
+Baixe de novo — não reaproveite o download que deu erro.
+
 **"Para usar caracteres especiais em um nome de medida, coloque todo o nome entre colchetes"**
 Você colou o arquivo do **tema** (o `.json`, que começa com `{`) na caixa de medida.
 O tema não é medida: ele entra em **Exibir → Temas**. Aperte Esc e descarte.

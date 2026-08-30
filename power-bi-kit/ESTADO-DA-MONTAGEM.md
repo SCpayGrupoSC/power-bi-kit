@@ -57,10 +57,16 @@ Clique em **Atualizar agora** na faixa amarela antes de conferir números.
 
 ### 1. Tema e cores da marca
 
-- [ ] **Exibir → Temas → Procurar temas** → `tema-scpay.json`
+- [ ] Baixe de novo o `tema-scpay.json` (a versão anterior era recusada)
+- [ ] **Exibir → Temas → Procurar temas** → o arquivo novo
 
 Troca a paleta antiga pela da SCpay: fundo `#F7F9FB`, cartões brancos com
 canto de 16 px, cabeçalho de tabela em `#2B2D3B` com texto branco.
+
+A importação que falhou citava “propriedade inválida” sem dizer qual.
+O arquivo antigo tinha `secondaryForeground`, chave que o schema oficial
+não aceita. Este já usa `firstLevelElements` / `secondLevelElements` e
+passa no schema 2.119–2.157. Não reaproveite o download que deu erro.
 
 - [ ] Abrir a medida **`Status Cor`** e substituir a fórmula pela versão da
   marca (teal no OK, laranja no Aguardando, vermelho do logo na divergência)
