@@ -1,0 +1,169 @@
+-- ============================================================
+-- Conciliação Spread Previsto — medidas para colar
+-- Power BI Desktop → Modelagem → Nova medida
+-- Cole UM bloco por vez (do nome até o último parêntese).
+--
+-- Tabela esperada: fSpread
+-- Colunas: Data, Adquirente, Bandeira, Produto,
+--          ValorPrevisto, ValorRealizado
+-- Produto deve ser: MDR | Pix | Antecipação
+--
+-- Status:
+--   Aguardando  = falta previsto OU realizado
+--   OK          = diferença absoluta <= R$ 0,01
+--   Divergente  = diferença absoluta > R$ 0,01
+-- ============================================================
+
+-- 1) Tolerância em reais (1 centavo). Mude só este número se a regra do time for outra.
+Tolerância R$ = 0.01
+
+-- 2) Totais
+Spread Previsto = SUM ( fSpread[ValorPrevisto] )
+
+Spread Realizado = SUM ( fSpread[ValorRealizado] )
+
+Divergência =
+[Spread Realizado] - [Spread Previsto]
+
+Divergência Abs =
+ABS ( [Divergência] )
+
+% Divergência =
+DIVIDE ( [Divergência], [Spread Previsto] )
+
+-- 3) Status do recorte atual (cartão de KPI e título condicional)
+Status Conciliação =
+VAR TemPrevisto = NOT ISBLANK ( [Spread Previsto] )
+VAR TemRealizado = NOT ISBLANK ( [Spread Realizado] )
+VAR Dentro = [Divergência Abs] <= [Tolerância R$]
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT TemPrevisto || NOT TemRealizado, "Aguardando",
+        Dentro, "OK",
+        "Divergente"
+    )
+
+-- 4) Cor do status (use em formatação condicional de fonte / fundo)
+Status Cor =
+SWITCH (
+    [Status Conciliação],
+    "OK", "#1F8A70",
+    "Divergente", "#C23B2E",
+    "Aguardando", "#D4A017",
+    "#7A8B99"
+)
+
+-- 5) Contagem por status (rosquinha e cartões laterais)
+--    Precisa da coluna calculada Status Linha — veja o bloco no final deste arquivo.
+Qtd OK =
+CALCULATE ( COUNTROWS ( fSpread ), fSpread[Status Linha] = "OK" )
+
+Qtd Divergente =
+CALCULATE ( COUNTROWS ( fSpread ), fSpread[Status Linha] = "Divergente" )
+
+Qtd Aguardando =
+CALCULATE ( COUNTROWS ( fSpread ), fSpread[Status Linha] = "Aguardando" )
+
+Qtd Linhas = COUNTROWS ( fSpread )
+
+% Linhas OK =
+DIVIDE ( [Qtd OK], [Qtd Linhas] )
+
+-- 6) MDR
+MDR Previsto =
+CALCULATE ( [Spread Previsto], fSpread[Produto] = "MDR" )
+
+MDR Realizado =
+CALCULATE ( [Spread Realizado], fSpread[Produto] = "MDR" )
+
+MDR Divergência =
+[MDR Realizado] - [MDR Previsto]
+
+MDR Status =
+VAR TemPrevisto = NOT ISBLANK ( [MDR Previsto] )
+VAR TemRealizado = NOT ISBLANK ( [MDR Realizado] )
+VAR Dentro = ABS ( [MDR Divergência] ) <= [Tolerância R$]
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT TemPrevisto || NOT TemRealizado, "Aguardando",
+        Dentro, "OK",
+        "Divergente"
+    )
+
+-- 7) Pix
+Pix Previsto =
+CALCULATE ( [Spread Previsto], fSpread[Produto] = "Pix" )
+
+Pix Realizado =
+CALCULATE ( [Spread Realizado], fSpread[Produto] = "Pix" )
+
+Pix Divergência =
+[Pix Realizado] - [Pix Previsto]
+
+Pix Status =
+VAR TemPrevisto = NOT ISBLANK ( [Pix Previsto] )
+VAR TemRealizado = NOT ISBLANK ( [Pix Realizado] )
+VAR Dentro = ABS ( [Pix Divergência] ) <= [Tolerância R$]
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT TemPrevisto || NOT TemRealizado, "Aguardando",
+        Dentro, "OK",
+        "Divergente"
+    )
+
+-- 8) Antecipação
+Antecipação Previsto =
+CALCULATE ( [Spread Previsto], fSpread[Produto] = "Antecipação" )
+
+Antecipação Realizado =
+CALCULATE ( [Spread Realizado], fSpread[Produto] = "Antecipação" )
+
+Antecipação Divergência =
+[Antecipação Realizado] - [Antecipação Previsto]
+
+Antecipação Status =
+VAR TemPrevisto = NOT ISBLANK ( [Antecipação Previsto] )
+VAR TemRealizado = NOT ISBLANK ( [Antecipação Realizado] )
+VAR Dentro = ABS ( [Antecipação Divergência] ) <= [Tolerância R$]
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT TemPrevisto || NOT TemRealizado, "Aguardando",
+        Dentro, "OK",
+        "Divergente"
+    )
+
+-- 9) Textos prontos para cartão / caixa de texto
+KPI Título Spread =
+"Spread previsto"
+
+KPI Subtítulo Periodo =
+"Conciliação MDR · Pix · Antecipação"
+
+Status Resumo =
+[Status Conciliação] & "  ·  " &
+FORMAT ( [Qtd OK], "0" ) & " OK  ·  " &
+FORMAT ( [Qtd Divergente], "0" ) & " divergente  ·  " &
+FORMAT ( [Qtd Aguardando], "0" ) & " aguardando"
+
+-- ============================================================
+-- COLUNA CALCULADA (não é medida)
+-- Tabela fSpread → Nova coluna
+-- Serve no filtro de Status e na rosquinha.
+-- ============================================================
+--
+-- Status Linha =
+-- VAR Previsto = fSpread[ValorPrevisto]
+-- VAR Realizado = fSpread[ValorRealizado]
+-- VAR Delta = ABS ( Realizado - Previsto )
+-- VAR Tol = 0.01
+-- RETURN
+--     SWITCH (
+--         TRUE (),
+--         ISBLANK ( Previsto ) || ISBLANK ( Realizado ), "Aguardando",
+--         Delta <= Tol, "OK",
+--         "Divergente"
+--     )
