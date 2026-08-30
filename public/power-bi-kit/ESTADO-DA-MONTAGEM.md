@@ -57,16 +57,17 @@ Clique em **Atualizar agora** na faixa amarela antes de conferir números.
 
 ### 1. Tema e cores da marca
 
-- [ ] Baixe de novo o `tema-scpay.json` (a versão anterior era recusada)
-- [ ] **Exibir → Temas → Procurar temas** → o arquivo novo
+- [ ] Apague da pasta **Downloads** qualquer `tema-scpay.json` antigo
+- [ ] Baixe **`tema-scpay-v2.json`**
+- [ ] **Exibir → Temas → Procurar temas** → só esse arquivo
 
-Troca a paleta antiga pela da SCpay: fundo `#F7F9FB`, cartões brancos com
-canto de 16 px, cabeçalho de tabela em `#2B2D3B` com texto branco.
+O v2 tem 5 chaves: `name`, `dataColors`, `background`, `foreground`,
+`tableAccent`. É o formato clássico do Power BI. Abra no Bloco de Notas:
+se aparecer `firstLevelElements`, `visualStyles` ou mais de ~20 linhas,
+ainda é o arquivo velho.
 
-A importação que falhou citava “propriedade inválida” sem dizer qual.
-O arquivo antigo tinha `secondaryForeground`, chave que o schema oficial
-não aceita. Este já usa `firstLevelElements` / `secondLevelElements` e
-passa no schema 2.119–2.157. Não reaproveite o download que deu erro.
+As cores de cartão e cabeçalho de tabela entram depois, quando o import
+passar. O status continua na medida `Status Cor`.
 
 - [ ] Abrir a medida **`Status Cor`** e substituir a fórmula pela versão da
   marca (teal no OK, laranja no Aguardando, vermelho do logo na divergência)

@@ -12,7 +12,7 @@ Não precisa saber programar. A ordem certa está no assistente (aba **Passo a p
 
 | Arquivo | Para que serve | Onde entra no Power BI |
 |---|---|---|
-| `tema-scpay.json` | Cores, fontes e borda dos visuais, na paleta SCpay | **Exibir → Temas → Procurar temas** |
+| `tema-scpay-v2.json` | Paleta SCpay no formato clássico (5 chaves) | **Exibir → Temas → Procurar temas** |
 | `medidas-layout.dax` | As 8 obrigatórias já estão no modelo. O apêndice 9–13 ainda falta | **Modelagem → Nova medida** — uma medida por clique |
 | `posicoes-visuais.csv` | X, Y, largura e altura de cada peça | **Formato → Geral → Propriedades → Posição** |
 
@@ -45,11 +45,11 @@ não muda a cor do status.
 ## Erros comuns
 
 **"Erro ao importar o arquivo tema"**
-O Power BI recusa qualquer chave desconhecida no topo do `.json` — a mensagem
-fala de sintaxe, cor inválida e propriedade de nível superior, sem dizer qual.
-A versão que falhou tinha `secondaryForeground`. O arquivo deste kit já usa
-`firstLevelElements` / `secondLevelElements` e passa no schema oficial 2.119–2.157.
-Baixe de novo — não reaproveite o download que deu erro.
+O Desktop recusou as versões com `secondaryForeground`, `firstLevelElements`
+e `visualStyles`. Use **`tema-scpay-v2.json`**: só `name`, `dataColors`,
+`background`, `foreground` e `tableAccent`. Apague o arquivo antigo da pasta
+Downloads antes de importar — o Windows reabre o download velho se o nome
+for o mesmo.
 
 **"Para usar caracteres especiais em um nome de medida, coloque todo o nome entre colchetes"**
 Você colou o arquivo do **tema** (o `.json`, que começa com `{`) na caixa de medida.
