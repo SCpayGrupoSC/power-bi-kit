@@ -54,17 +54,51 @@ Clique em **Atualizar agora** na faixa amarela antes de conferir números.
 
 ---
 
+## Bugs no print (oficial já carregado)
+
+A competência 2026-07 agora tem oficial (R$ 3.526,84). O previsto fecha
+(R$ 3.503,82). A diferença global de −R$ 23,02 está certa. O que quebrou
+foi o recorte por fluxo.
+
+**Grave — tabela de conciliação.** `Oficial por Fluxo` repete o total
+`$ 3.526,84` em MDR, Pix e Antecipação. Por isso Diferença, Diferença %,
+Status e Diferença Abs saem iguais nas três linhas, e o resumo conta
+**3 divergente**. Cada linha está comparando o previsto daquele fluxo
+com o oficial de **todos** os fluxos. Causa mais provável: a medida
+`Oficial por Fluxo` não responde a `dFluxoDax[Fluxo]` — falta
+relacionamento, a coluna de fluxo no oficial não casa com a dimensão,
+ou a fórmula ignora o filtro (ALL / total).
+
+**Cartões.** Os títulos `Previsto Texto` / `Oficial Texto` / `Status Layout`
+são o nome da medida no rótulo de categoria. `Divergente` ainda está navy
+(`Status Cor` não está na cor da fonte). Oficial em vermelho só faria
+sentido no cartão Diferença e no Status geral — no Oficial o número
+fica navy. Os seis cartões da direita cortam rótulo e valor.
+
+**Tabela de detalhe.** Não é o mesmo bug. Volume, custo, transações e
+Spread Previsto estão no grão do previsto (compulsória / eventual /
+MDR cartão / Pix) e o total de spread bate com o KPI. Ela não mostra
+oficial, e não deve.
+
+---
+
 ## Pendente — comece aqui
 
-### 1. Status Cor nas cores da marca
+### 1. Consertar Oficial por Fluxo (antes da cor)
 
-- [ ] Abrir a medida **`Status Cor`** e substituir a fórmula (teal no OK,
-  laranja no Aguardando, vermelho do logo na divergência)
+- [ ] Exibição de modelo: relação de `ffechamentoOficial` com `dFluxoDax`
+- [ ] Power Query da consulta oficial: existe coluna de fluxo e os nomes
+  batem com MDR / Pix / Antecipação?
+- [ ] Abrir a medida **`Oficial por Fluxo`** e ver se ela soma no total
+  (ALL, REMOVEFILTERS, ou coluna sem fluxo)
 
-O tema **não** muda a cor do status. Ela está escrita dentro do DAX.
-Na tela atual o **Aguardando** ainda está navy — é este passo que pinta.
+Enquanto essa medida repetir o total, as três linhas e o **3 divergente**
+continuam falsos. Não pinte status em cima disso.
 
-### 2. Cor da fonte por status
+### 2. Status Cor e cor da fonte
+
+- [ ] Recolar **`Status Cor`** se ainda estiver com as cores velhas
+- [ ] Cartão **Status geral** e cartão **Diferença** (não o Oficial):
 
 - [ ] Cartão **Status geral** e cartão **Diferença**:
   **Formatar visual → Visual → Valores → Cor → fx** →
