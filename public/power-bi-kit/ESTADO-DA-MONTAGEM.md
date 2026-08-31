@@ -89,10 +89,14 @@ Opcional: juntar cada trio num **cartão de várias linhas** (412 de largura),
 como está no `posicoes-visuais.csv`. Visualmente é mais limpo, mas os três
 cartões separados mostram a mesma informação.
 
-### 4. Conferir e gravar
+### 4. Arquivos oficiais e gravar
 
-- [ ] **Atualizar agora** na faixa amarela — sem isso Oficial, Diferença e as
-  contagens ficam em `—` e 0
+Os oficiais **não** vão na pasta do GitHub. A pasta é a da consulta
+`ffechamentoOficial`: **Página Inicial → Transformar dados** → clique na
+consulta → passo **Origem**. O caminho da fórmula é o destino.
+
+- [ ] Colocar os arquivos oficiais nessa pasta (mesmo tipo e colunas)
+- [ ] **Atualizar agora** na faixa amarela
 - [ ] Conferir se o status pinta certo e salvar o `.pbix`
 
 Posições completas em `posicoes-visuais.csv`.
